@@ -2,7 +2,7 @@
  *
  *       Auteur: Pedrono Marie-Jo
  *
- * 	création : 13 février 2002
+ * 	crï¿½ation : 13 fï¿½vrier 2002
  *
  *     nature : projet etudiant
  *
@@ -83,7 +83,7 @@ SKIP :
 }
 
 
-/* Mots réservés*/
+/* Mots rï¿½servï¿½s*/
 
 TOKEN :
 {
@@ -185,8 +185,8 @@ void declVar() : {}
 
 void type() :{}
 {
-   <ENTIER> 			
- | <BOOLEEN>	
+   <ENTIER>   { expression.ajoutType(Ident.eType.ENTIER); }
+ | <BOOLEEN>  { expression.ajoutType(Ident.eType.BOOLEEN); }
 }
 /*
  * Syntaxe des instructions.
@@ -247,30 +247,30 @@ void valeur () : {}
 
 void opRel() : {}
 {
-   "=" 		
- | "<>" 	
- | "<" 		
- | "<=" 	
- | ">" 		
- | ">=" 	
+   "=" 		 { expression.ajoutOp(Expression.eOperande.EGAL); }
+ | "<>" 	 { expression.ajoutOp(Expression.eOperande.DIFF); }
+ | "<" 		 { expression.ajoutOp(Expression.eOperande.INF); }
+ | "<=" 	 { expression.ajoutOp(Expression.eOperande.INFEGAL); }
+ | ">" 		 { expression.ajoutOp(Expression.eOperande.SUP); }
+ | ">=" 	 { expression.ajoutOp(Expression.eOperande.SUPEGAL); }
 } 
 
 void opAdd() : {}
 {
-    "+"		
-  |  "-"  
-  | <OU> 	
+    "+"		 { expression.ajoutOp(Expression.eOperande.PLUS); }
+  |  "-"     { expression.ajoutOp(Expression.eOperande.MOINS); }
+  | <OU> 	 { expression.ajoutOp(Expression.eOperande.OU); }
 }
 
 void opMul() : {}
 {
-  "*"		
-  | "/"		
-  | <ET>	
+  "*"		 { expression.ajoutOp(Expression.eOperande.MUL); }
+  | "/"		 { expression.ajoutOp(Expression.eOperande.DIV); }
+  | <ET>	 { expression.ajoutOp(Expression.eOperande.ET); }
 } 
 
 void opNeg() : {}
-{ "-" 		
+{ "-" 	
  | <NON>	
 }
 

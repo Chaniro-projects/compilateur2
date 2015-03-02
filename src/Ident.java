@@ -5,6 +5,7 @@ public class Ident {
 	public static enum eType {
 		BOOLEEN,
 		ENTIER,
+        ERREUR
 	}
 	
 	public Ident(String nom, eType type){
