@@ -264,8 +264,8 @@ void opAdd() : {}
 
 void opMul() : {}
 {
-  "*"		 { expression.ajoutOp(Expression.eOperande.MUL); }
-  | "/"		 { expression.ajoutOp(Expression.eOperande.DIV); }
+  "*"		 { expression.ajoutOp(Expression.eOperande.MULTIPLIER); }
+  | "/"		 { expression.ajoutOp(Expression.eOperande.DIVISER); }
   | <ET>	 { expression.ajoutOp(Expression.eOperande.ET); }
 } 
 
