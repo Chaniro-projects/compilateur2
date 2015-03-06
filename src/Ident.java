@@ -1,14 +1,8 @@
-
 public class Ident {
 	private String nom;
-	private eType type;
-	public static enum eType {
-		BOOLEEN,
-		ENTIER,
-        ERREUR
-	}
+	private Constante.eType type;
 	
-	public Ident(String nom, eType type){
+	public Ident(String nom, Constante.eType type){
 		this.nom = nom;
 		this.type = type;
 	}
@@ -17,7 +11,7 @@ public class Ident {
 		return nom;
 	}
 
-	public eType getType() {
+	public Constante.eType getType() {
 		return type;
 	}
 }

@@ -185,8 +185,8 @@ void declVar() : {}
 
 void type() :{}
 {
-   <ENTIER>   { expression.ajoutType(Ident.eType.ENTIER); }
- | <BOOLEEN>  { expression.ajoutType(Ident.eType.BOOLEEN); }
+   <ENTIER>   { expression.ajoutType(Constante.eType.ENTIER); }
+ | <BOOLEEN>  { expression.ajoutType(Constante.eType.BOOLEEN); }
 }
 /*
  * Syntaxe des instructions.
@@ -247,26 +247,26 @@ void valeur () : {}
 
 void opRel() : {}
 {
-   "=" 		 { expression.ajoutOp(Expression.eOperande.EGAL); }
- | "<>" 	 { expression.ajoutOp(Expression.eOperande.DIFF); }
- | "<" 		 { expression.ajoutOp(Expression.eOperande.INF); }
- | "<=" 	 { expression.ajoutOp(Expression.eOperande.INFEGAL); }
- | ">" 		 { expression.ajoutOp(Expression.eOperande.SUP); }
- | ">=" 	 { expression.ajoutOp(Expression.eOperande.SUPEGAL); }
+   "=" 		 { expression.ajoutOp(Constante.eOperande.EGAL); }
+ | "<>" 	 { expression.ajoutOp(Constante.eOperande.DIFF); }
+ | "<" 		 { expression.ajoutOp(Constante.eOperande.INF); }
+ | "<=" 	 { expression.ajoutOp(Constante.eOperande.INFEGAL); }
+ | ">" 		 { expression.ajoutOp(Constante.eOperande.SUP); }
+ | ">=" 	 { expression.ajoutOp(Constante.eOperande.SUPEGAL); }
 } 
 
 void opAdd() : {}
 {
-    "+"		 { expression.ajoutOp(Expression.eOperande.PLUS); }
-  |  "-"     { expression.ajoutOp(Expression.eOperande.MOINS); }
-  | <OU> 	 { expression.ajoutOp(Expression.eOperande.OU); }
+    "+"		 { expression.ajoutOp(Constante.eOperande.PLUS); }
+  |  "-"     { expression.ajoutOp(Constante.eOperande.MOINS); }
+  | <OU> 	 { expression.ajoutOp(Constante.eOperande.OU); }
 }
 
 void opMul() : {}
 {
-  "*"		 { expression.ajoutOp(Expression.eOperande.MULTIPLIER); }
-  | "/"		 { expression.ajoutOp(Expression.eOperande.DIVISER); }
-  | <ET>	 { expression.ajoutOp(Expression.eOperande.ET); }
+  "*"		 { expression.ajoutOp(Constante.eOperande.MULTIPLIER); }
+  | "/"		 { expression.ajoutOp(Constante.eOperande.DIVISER); }
+  | <ET>	 { expression.ajoutOp(Constante.eOperande.ET); }
 } 
 
 void opNeg() : {}

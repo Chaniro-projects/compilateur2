@@ -3,80 +3,66 @@ import java.util.*;
 
 public class Expression {
 
-    public static enum eOperande {
-        PLUS,
-        MOINS,
-        MULTIPLIER,
-        DIVISER,
-        INF,
-        INFEGAL,
-        SUP,
-        SUPEGAL,
-        EGAL,
-        DIFF,
-        ET,
-        OU
-    }
+    
 	
-	private Stack<Ident.eType> types;
-	private Stack<eOperande> operateurs;
+	private Stack<Constante.eType> types;
+	private Stack<Constante.eOperande> operateurs;
 	
 	public Expression(){
-		operateurs = new Stack<eOperande>();
-		types = new Stack<Ident.eType>();
+		operateurs = new Stack<Constante.eOperande>();
+		types = new Stack<Constante.eType>();
 	}
 	
-	public void ajoutType(Ident.eType type){
+	public void ajoutType(Constante.eType type){
 		types.add(type);
 	}
 	
-	public void ajoutOp(eOperande c){
+	public void ajoutOp(Constante.eOperande c){
 		operateurs.add(c);
 	}
 
     public void controleType() {
-        Ident.eType type1 = types.pop(), type2 = types.pop();
+    	Constante.eType type1 = types.pop(), type2 = types.pop();
+    	Constante.eOperande op = operateurs.pop();
 
         if(type1 != type2)
-            types.push(Ident.eType.ERREUR);
+            types.push(Constante.eType.ERREUR);
         else {
-            eOperande op = operateurs.pop();
-
             switch (op) {
                 case PLUS:
                 case MOINS:
                 case DIVISER:
                 case MULTIPLIER:
-                    if (type1 == Ident.eType.ENTIER)
-                        types.push(Ident.eType.ENTIER);
-                    if (type1 == Ident.eType.BOOLEEN)
-                        types.push(Ident.eType.ERREUR);
+                    if (type1 == Constante.eType.ENTIER)
+                        types.push(Constante.eType.ENTIER);
+                    else if (type1 == Constante.eType.BOOLEEN)
+                        types.push(Constante.eType.ERREUR);
                     break;
 
                 case INF:
                 case INFEGAL:
                 case SUP:
                 case SUPEGAL:
-                    if (type1 == Ident.eType.ENTIER)
-                        types.push(Ident.eType.BOOLEEN);
-                    if (type1 == Ident.eType.BOOLEEN)
-                        types.push(Ident.eType.ERREUR);
+                    if (type1 == Constante.eType.ENTIER)
+                        types.push(Constante.eType.BOOLEEN);
+                    else if (type1 == Constante.eType.BOOLEEN)
+                        types.push(Constante.eType.ERREUR);
                     break;
 
                 case EGAL:
                 case DIFF:
-                    if (type1 == Ident.eType.ENTIER)
-                        types.push(Ident.eType.BOOLEEN);
-                    if (type1 == Ident.eType.BOOLEEN)
-                        types.push(Ident.eType.BOOLEEN);
+                    if (type1 == Constante.eType.ENTIER)
+                        types.push(Constante.eType.BOOLEEN);
+                    else if (type1 == Constante.eType.BOOLEEN)
+                        types.push(Constante.eType.BOOLEEN);
                     break;
 
                 case ET:
                 case OU:
-                    if (type1 == Ident.eType.ENTIER)
-                        types.push(Ident.eType.ERREUR);
-                    if (type1 == Ident.eType.BOOLEEN)
-                        types.push(Ident.eType.BOOLEEN);
+                    if (type1 == Constante.eType.ENTIER)
+                        types.push(Constante.eType.ERREUR);
+                    else if (type1 == Constante.eType.BOOLEEN)
+                        types.push(Constante.eType.BOOLEEN);
                     break;
             }
         }
