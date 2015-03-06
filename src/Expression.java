@@ -21,7 +21,7 @@ public class Expression {
 		operateurs.add(c);
 	}
 
-    public void controleType() {
+    public void evaluation(int line) { // Rajouter "line" dans la grammaire"
     	Constante.eType type1 = types.pop(), type2 = types.pop();
     	Constante.eOperande op = operateurs.pop();
 
@@ -37,6 +37,7 @@ public class Expression {
                         types.push(Constante.eType.ENTIER);
                     else if (type1 == Constante.eType.BOOLEEN)
                         types.push(Constante.eType.ERREUR);
+                    	System.out.println("Erreur à la ligne " + line + ".");
                     break;
 
                 case INF:
@@ -47,6 +48,7 @@ public class Expression {
                         types.push(Constante.eType.BOOLEEN);
                     else if (type1 == Constante.eType.BOOLEEN)
                         types.push(Constante.eType.ERREUR);
+                    	System.out.println("Erreur à la ligne " + line + ".");
                     break;
 
                 case EGAL:
@@ -65,6 +67,17 @@ public class Expression {
                         types.push(Constante.eType.BOOLEEN);
                     break;
             }
+        }
+    }
+    
+    private void controleOp(Constante.eOperande op, Constante.eType type, int line) {
+    	if (type == Constante.eType.ENTIER) {
+            types.push(Constante.eType.ENTIER);
+            Yaka.yvm.iop(op);
+    	}
+        else if (type == Constante.eType.BOOLEEN) {
+            types.push(Constante.eType.ERREUR);
+        	System.out.println("Erreur à la ligne " + line + ".");
         }
     }
 }

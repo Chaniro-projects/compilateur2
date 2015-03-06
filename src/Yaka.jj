@@ -215,14 +215,14 @@ void simpleExpr() : {}
 {
    terme() 
    (opAdd() 
-   terme()	
+   terme()
    )*
 } 
 void terme() : {}
 {
   facteur() 
   (opMul() 
-  facteur()	
+  facteur()
   )*
 }
 void facteur() : {}
