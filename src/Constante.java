@@ -1,5 +1,5 @@
 
-public class Constante {
+public interface Constante {
 	public static enum eType {
 		BOOLEEN,
 		ENTIER,

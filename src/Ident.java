@@ -1,8 +1,8 @@
-public class Ident {
+public class Ident implements Constante {
 	private String nom;
-	private Constante.eType type;
+	private eType type;
 	
-	public Ident(String nom, Constante.eType type){
+	public Ident(String nom, eType type){
 		this.nom = nom;
 		this.type = type;
 	}
@@ -11,7 +11,7 @@ public class Ident {
 		return nom;
 	}
 
-	public Constante.eType getType() {
+	public eType getType() {
 		return type;
 	}
 }

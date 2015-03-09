@@ -17,7 +17,7 @@ PARSER_BEGIN(Yaka)
 
 
 
-public class Yaka {
+public class Yaka implements Constante {
 	
 	public static Declaration declaration;
 	public static TabIdent tabIdent;
@@ -185,8 +185,8 @@ void declVar() : {}
 
 void type() :{}
 {
-   <ENTIER>   { expression.ajoutType(Constante.eType.ENTIER); }
- | <BOOLEEN>  { expression.ajoutType(Constante.eType.BOOLEEN); }
+   <ENTIER>   { expression.ajoutType(eType.ENTIER); }
+ | <BOOLEEN>  { expression.ajoutType(eType.BOOLEEN); }
 }
 /*
  * Syntaxe des instructions.
@@ -247,26 +247,26 @@ void valeur () : {}
 
 void opRel() : {}
 {
-   "=" 		 { expression.ajoutOp(Constante.eOperande.EGAL); }
- | "<>" 	 { expression.ajoutOp(Constante.eOperande.DIFF); }
- | "<" 		 { expression.ajoutOp(Constante.eOperande.INF); }
- | "<=" 	 { expression.ajoutOp(Constante.eOperande.INFEGAL); }
- | ">" 		 { expression.ajoutOp(Constante.eOperande.SUP); }
- | ">=" 	 { expression.ajoutOp(Constante.eOperande.SUPEGAL); }
+   "=" 		 { expression.ajoutOp(eOperande.EGAL); }
+ | "<>" 	 { expression.ajoutOp(eOperande.DIFF); }
+ | "<" 		 { expression.ajoutOp(eOperande.INF); }
+ | "<=" 	 { expression.ajoutOp(eOperande.INFEGAL); }
+ | ">" 		 { expression.ajoutOp(eOperande.SUP); }
+ | ">=" 	 { expression.ajoutOp(eOperande.SUPEGAL); }
 } 
 
 void opAdd() : {}
 {
-    "+"		 { expression.ajoutOp(Constante.eOperande.PLUS); }
-  |  "-"     { expression.ajoutOp(Constante.eOperande.MOINS); }
-  | <OU> 	 { expression.ajoutOp(Constante.eOperande.OU); }
+    "+"		 { expression.ajoutOp(eOperande.PLUS); }
+  |  "-"     { expression.ajoutOp(eOperande.MOINS); }
+  | <OU> 	 { expression.ajoutOp(eOperande.OU); }
 }
 
 void opMul() : {}
 {
-  "*"		 { expression.ajoutOp(Constante.eOperande.MULTIPLIER); }
-  | "/"		 { expression.ajoutOp(Constante.eOperande.DIVISER); }
-  | <ET>	 { expression.ajoutOp(Constante.eOperande.ET); }
+  "*"		 { expression.ajoutOp(eOperande.MULTIPLIER); }
+  | "/"		 { expression.ajoutOp(eOperande.DIVISER); }
+  | <ET>	 { expression.ajoutOp(eOperande.ET); }
 } 
 
 void opNeg() : {}
