@@ -9,11 +9,15 @@ public class Yaka implements Constante, YakaConstants {
   public static void main(String args[]) {
     Yaka analyseur;
     java.io.InputStream input;
+    expression = new Expression();
+    tabIdent = new TabIdent();
+    declaration = new Declaration();
 
     if (args.length==1) {
       System.out.print(args[args.length-1] + ": ");
       try {
         input = new java.io.FileInputStream(args[args.length-1]+".yaka");
+        yvm = new YVM(args[args.length-1]+".yakacoder");
       } catch (java.io.FileNotFoundException e) {
         System.out.println("Fichier introuvable.");
         return;
@@ -28,6 +32,7 @@ public class Yaka implements Constante, YakaConstants {
     try {
       analyseur = new Yaka(input);
       analyseur.prog();
+      yvm.fermer();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
       String msg = e.getMessage();
@@ -144,11 +149,9 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ENTIER:
       jj_consume_token(ENTIER);
-                expression.ajoutType(eType.ENTIER);
       break;
     case BOOLEEN:
       jj_consume_token(BOOLEEN);
-                expression.ajoutType(eType.BOOLEEN);
       break;
     default:
       jj_la1[5] = jj_gen;
@@ -217,6 +220,7 @@ public class Yaka implements Constante, YakaConstants {
     case 49:
       opRel();
       simpleExpr();
+                expression.evaluation(token.beginLine);
       break;
     default:
       jj_la1[9] = jj_gen;
@@ -240,6 +244,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       opAdd();
       terme();
+           expression.evaluation(token.beginLine);
     }
   }
 
@@ -259,6 +264,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       opMul();
       facteur();
+            expression.evaluation(token.beginLine);
     }
   }
 
@@ -307,15 +313,18 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case entier:
       jj_consume_token(entier);
+              expression.ajoutType(eType.ENTIER); yvm.iconst(YakaTokenManager.entierLu);
       break;
     case ident:
       jj_consume_token(ident);
       break;
     case VRAI:
       jj_consume_token(VRAI);
+              expression.ajoutType(eType.BOOLEEN);
       break;
     case FAUX:
       jj_consume_token(FAUX);
+              expression.ajoutType(eType.BOOLEEN);
       break;
     default:
       jj_la1[14] = jj_gen;

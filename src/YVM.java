@@ -1,16 +1,19 @@
 import java.io.*;
 
-public class YVM {
+public class YVM implements Constante {
 	private OutputStream fo;
 	
 	public YVM(String nom) {
 		this.fo = Ecriture.ouvrir(nom);
 	}
 	
+	public YVM() {
+		this.fo = System.out;
+	}
+	
 	public void fermer() {
 		Ecriture.fermer(fo);
 	}
-	
 	
 	public void iadd() {
 		Ecriture.ecrireStringln(fo, "iadd");

@@ -27,11 +27,15 @@ public class Yaka implements Constante {
   public static void main(String args[]) { 
     Yaka analyseur;
     java.io.InputStream input;
-
+    expression = new Expression();
+    tabIdent = new TabIdent();
+    declaration = new Declaration();
+    
     if (args.length==1) {
       System.out.print(args[args.length-1] + ": ");
       try {
         input = new java.io.FileInputStream(args[args.length-1]+".yaka");
+        yvm = new YVM(args[args.length-1]+".yakacoder");
       } catch (java.io.FileNotFoundException e) {
         System.out.println("Fichier introuvable.");
         return;
@@ -46,6 +50,7 @@ public class Yaka implements Constante {
     try {
       analyseur = new Yaka(input);
       analyseur.prog();
+      yvm.fermer();
       System.out.println("analyse syntaxique reussie!");
     } catch (ParseException e) {
       String msg = e.getMessage();
@@ -166,7 +171,7 @@ void defConst() : {}
 }
 
 void valConst() : {}{
-  <entier> 		
+  <entier>
  | <ident>		
  | <VRAI> 		
  | <FAUX> 		
@@ -185,8 +190,8 @@ void declVar() : {}
 
 void type() :{}
 {
-   <ENTIER>   { expression.ajoutType(eType.ENTIER); }
- | <BOOLEEN>  { expression.ajoutType(eType.BOOLEEN); }
+   <ENTIER>   
+ | <BOOLEEN> 
 }
 /*
  * Syntaxe des instructions.
@@ -205,7 +210,7 @@ void expression() : {}
 {
   simpleExpr() 
   (opRel() 
-  simpleExpr() 
+  simpleExpr() {expression.evaluation(token.beginLine);}
   )?
 }
 
@@ -215,14 +220,14 @@ void simpleExpr() : {}
 {
    terme() 
    (opAdd() 
-   terme()
+   terme(){expression.evaluation(token.beginLine);}
    )*
 } 
 void terme() : {}
 {
   facteur() 
   (opMul() 
-  facteur()
+  facteur(){expression.evaluation(token.beginLine);}
   )*
 }
 void facteur() : {}
@@ -238,10 +243,10 @@ void primaire (): {}
 }
 
 void valeur () : {}
-{ <entier> 		
+{ <entier>  { expression.ajoutType(eType.ENTIER); yvm.iconst(YakaTokenManager.entierLu); }
  | <ident> 		
- | <VRAI> 		
- | <FAUX> 		
+ | <VRAI>   { expression.ajoutType(eType.BOOLEEN); }
+ | <FAUX>   { expression.ajoutType(eType.BOOLEEN); }
  
 }
 

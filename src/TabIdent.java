@@ -4,7 +4,7 @@ import java.util.*;
 public class TabIdent {
 	private HashMap<String, Ident> table;
 	
-	public TabIdent(int taille){
+	public TabIdent(){
 		table = new HashMap<String, Ident>();
 	}
 	
