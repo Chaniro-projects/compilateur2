@@ -83,12 +83,12 @@ public class YVM implements Constante {
 		Ecriture.ecrireStringln(fo, "iconst " + valeur);
 	}
 	
-	public void ifeq() {
-		Ecriture.ecrireStringln(fo, "ifeq");
+	public void ifeq(String etiquette) {
+		Ecriture.ecrireStringln(fo, "ifeq " + etiquette);
 	}
 	
-	public void igoto() {
-		Ecriture.ecrireStringln(fo, "goto");
+	public void igoto(String etiquette) {
+		Ecriture.ecrireStringln(fo, "goto " + etiquette);
 	}
 	
 	public void ouvrePrinc(int variable) {

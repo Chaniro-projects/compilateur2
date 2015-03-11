@@ -16,94 +16,135 @@ public class YVMasm extends YVM implements Constante {
 	}
 	
 	public void iadd() {
-		Ecriture.ecrireStringln(fo, "iadd");
+		Ecriture.ecrireString(fo, ";");
+		super.iadd();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\nadd ax,bx\npush ax\n");
 	}
 	
 	public void isub() {
-		Ecriture.ecrireStringln(fo, "isub");
+		Ecriture.ecrireString(fo, ";");
+		super.isub();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\nsub ax,bx\npush ax\n");
 	}
 
 	public void imul() {
-		Ecriture.ecrireStringln(fo, "imul");
+		Ecriture.ecrireString(fo, ";");
+		super.imul();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\nimul bx\npush ax\n");
 	}
 	
 	public void idiv() {
-		Ecriture.ecrireStringln(fo, "idiv");
+		Ecriture.ecrireString(fo, ";");
+		super.idiv();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncwd\nidiv bx\npush ax\n");
 	}
 	
 	public void inot() {
-		Ecriture.ecrireStringln(fo, "inot");
+		Ecriture.ecrireString(fo, ";");
+		super.inot();
+		Ecriture.ecrireStringln(fo, "pop ax\ncmp ax,0\njne $+6\npush -1\njmp $+4push 0\n");
 	}
 	
 	public void ineg() {
-		Ecriture.ecrireStringln(fo, "ineg");
+		Ecriture.ecrireString(fo, ";");
+		super.ineg();
+		Ecriture.ecrireStringln(fo, "pop bx\nmov ax,0\nsub ax,bx\npush ax\n");
 	}
 	
 	public void ior() {
-		Ecriture.ecrireStringln(fo, "ior");
+		Ecriture.ecrireString(fo, ";");
+		super.ior();
+		Ecriture.ecrireStringln(fo, "pop bx\npox ax\nor ax,bx\npush ax\n");
 	}
 	
 	public void iand() {
-		Ecriture.ecrireStringln(fo, "iand");
+		Ecriture.ecrireString(fo, ";");
+		super.iand();
+		Ecriture.ecrireStringln(fo, "pop bx\npox ax\nand ax,bx\npush ax\n");
 	}
 	
 	public void iinf() {
-		Ecriture.ecrireStringln(fo, "iinf");
+		Ecriture.ecrireString(fo, ";");
+		super.iinf();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\njge $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void isup() {
-		Ecriture.ecrireStringln(fo, "isup");
+		Ecriture.ecrireString(fo, ";");
+		super.isup();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\njle $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void iinfegal() {
-		Ecriture.ecrireStringln(fo, "iinfegal");
+		Ecriture.ecrireString(fo, ";");
+		super.iinfegal();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\njg $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void isupegal() {
-		Ecriture.ecrireStringln(fo, "isupegal");
+		Ecriture.ecrireString(fo, ";");
+		super.isupegal();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\njl $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void iegal() {
-		Ecriture.ecrireStringln(fo, "iegal");
+		Ecriture.ecrireString(fo, ";");
+		super.iegal();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\njne $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void idiff() {
-		Ecriture.ecrireStringln(fo, "idiff");
+		Ecriture.ecrireString(fo, ";");
+		super.idiff();
+		Ecriture.ecrireStringln(fo, "pop bx\npop ax\ncpm ax,bx\nje $+6\npush -1\njmp $+4\npush 0\n");
 	}
 	
 	public void iload(int offset) {
-		Ecriture.ecrireStringln(fo, "iload " + offset);
+		Ecriture.ecrireString(fo, ";");
+		super.iload(offset);
+		Ecriture.ecrireStringln(fo, "push word ptr [bp" + offset + "]\n");
 	}
 	
 	public void istore(int offset) {
-		Ecriture.ecrireStringln(fo, "istore " + offset);
+		Ecriture.ecrireString(fo, ";");
+		super.istore(offset);
+		Ecriture.ecrireStringln(fo, "pop ax\nmov word ptr [bp" + offset + "],ax\n");
 	}
 	
 	public void iconst(int valeur) {
-		Ecriture.ecrireStringln(fo, "iconst " + valeur);
+		Ecriture.ecrireString(fo, ";");
+		super.iconst(valeur);
+		Ecriture.ecrireStringln(fo, "push " + valeur + "\n");
 	}
 	
-	public void ifeq() {
-		Ecriture.ecrireStringln(fo, "ifeq");
+	// Revoir le fonctionnement de ifeq et igoto
+	public void ifeq(String etiquette) {
+		Ecriture.ecrireString(fo, ";");
+		super.ifeq(etiquette);
+		Ecriture.ecrireString(fo, "ifeq " + etiquette + "\n");
 	}
 	
-	public void igoto() {
-		Ecriture.ecrireStringln(fo, "goto");
+	public void igoto(String etiquette) {
+		Ecriture.ecrireString(fo, ";");
+		super.igoto(etiquette);
+		Ecriture.ecrireStringln(fo, "jmp " + etiquette + "\n");
 	}
 	
 	public void ouvrePrinc(int variable) {
-		Ecriture.ecrireStringln(fo, "ouvrePrinc " + 2 * variable);
+		Ecriture.ecrireString(fo, ";");
+		super.ouvrePrinc(variable);
+		Ecriture.ecrireStringln(fo, "mov bp,sp\nsub sp," + 2 * variable + "\n");
 	}
 	
 	public void entete(){
-		Ecriture.ecrireStringln(fo, ";");
+		Ecriture.ecrireString(fo, ";");
 		super.entete();
-		Ecriture.ecrireStringln(fo,".model SMALL\n.586\n\n");
+		Ecriture.ecrireStringln(fo,".model SMALL\n.586\n");
 	}
 	
 	public void queue() {
-		Ecriture.ecrireStringln(fo, ";");
+		Ecriture.ecrireString(fo, ";");
 		super.queue();
-		Ecriture.ecrireStringln(fo, "nop\nexitcode\nend debut");
+		Ecriture.ecrireStringln(fo, "nop\nexitcode\nend debut\n");
 	}
 }
