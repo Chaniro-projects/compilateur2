@@ -2,10 +2,10 @@ import java.util.*;
 
 
 public class TabIdent {
-	private HashMap<String, Ident> table;
+	private LinkedHashMap<String, Ident> table;
 	
 	public TabIdent(){
-		table = new HashMap<String, Ident>();
+		table = new LinkedHashMap<String, Ident>();
 	}
 	
 	
@@ -23,5 +23,13 @@ public class TabIdent {
 		if(!existeIdent(clef)){
 			table.put(clef, id);
 		}
+	}
+
+	public LinkedHashMap<String, Ident> getTable() {
+		return table;
+	}
+
+	public void setTable(LinkedHashMap<String, Ident> table) {
+		this.table = table;
 	}
 }

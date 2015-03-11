@@ -27,9 +27,9 @@ public class Yaka implements Constante {
   public static void main(String args[]) { 
     Yaka analyseur;
     java.io.InputStream input;
-    expression = new Expression();
     tabIdent = new TabIdent();
-    declaration = new Declaration();
+    expression = new Expression(tabIdent);
+    declaration = new Declaration(tabIdent);
     
     if (args.length==1) {
       System.out.print(args[args.length-1] + ": ");
@@ -149,12 +149,12 @@ void prog() : {}
    <PROGRAMME> {yvm.entete();}
    <ident>	
    bloc()
-   <FPROGRAMME> {yvm.queue(); }
+   <FPROGRAMME> {yvm.queue(); System.out.println(declaration);}
 }
 
 void bloc() : {}{
  (declConst())*
- (declVar())*		
+ (declVar())* {yvm.ouvrePrinc(declaration.offset / -2);}
    suiteExpr() 
 }
 
@@ -166,33 +166,33 @@ void declConst() : {}
 void defConst() : {}
 {
 	
-  <ident>  	  	
+  <ident> { declaration.setLastIdent(YakaTokenManager.identLu); }
    "=" valConst()
     
 }
 
 void valConst() : {}{
-  <entier>
- | <ident>		
- | <VRAI> 		
- | <FAUX> 		
+  <entier> { declaration.createConstInt(YakaTokenManager.entierLu, token.beginLine); }
+ | <ident> { declaration.createConstVar(YakaTokenManager.identLu, token.beginLine); }
+ | <VRAI>  { declaration.createConstBool(TRUE, token.beginLine); }
+ | <FAUX>  { declaration.createConstBool(FALSE, token.beginLine); }
 }
 
 
 void declVar() : {}
 {
-  <VAR> type()	
-  <ident>		
+  <VAR> type()
+  <ident> { declaration.createVar(YakaTokenManager.identLu, token.beginLine); }
   ("," 
-      <ident>  
+      <ident> { declaration.createVar(YakaTokenManager.identLu, token.beginLine); }
   )* ";"
 	
 }
 
 void type() :{}
 {
-   <ENTIER>   
- | <BOOLEEN> 
+   <ENTIER>  { declaration.setLastType(eType.ENTIER); }
+ | <BOOLEEN> { declaration.setLastType(eType.BOOLEEN); }
 }
 /*
  * Syntaxe des instructions.
@@ -245,7 +245,7 @@ void primaire (): {}
 
 void valeur () : {}
 { <entier>  { expression.ajoutType(eType.ENTIER); yvm.iconst(YakaTokenManager.entierLu); }
- | <ident> 		
+ | <ident>  { expression.ajoutTypeFromVar(YakaTokenManager.identLu, token.beginLine); }
  | <VRAI>   { expression.ajoutType(eType.BOOLEEN); }
  | <FAUX>   { expression.ajoutType(eType.BOOLEEN); }
  

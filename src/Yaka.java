@@ -9,9 +9,9 @@ public class Yaka implements Constante, YakaConstants {
   public static void main(String args[]) {
     Yaka analyseur;
     java.io.InputStream input;
-    expression = new Expression();
     tabIdent = new TabIdent();
-    declaration = new Declaration();
+    expression = new Expression(tabIdent);
+    declaration = new Declaration(tabIdent);
 
     if (args.length==1) {
       System.out.print(args[args.length-1] + ": ");
@@ -50,7 +50,7 @@ public class Yaka implements Constante, YakaConstants {
     jj_consume_token(ident);
     bloc();
     jj_consume_token(FPROGRAMME);
-                 yvm.queue();
+                 yvm.queue(); System.out.println(declaration);
   }
 
   static final public void bloc() throws ParseException {
@@ -78,6 +78,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       declVar();
     }
+               yvm.ouvrePrinc(declaration.offset / -2);
     suiteExpr();
   }
 
@@ -102,6 +103,7 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void defConst() throws ParseException {
     jj_consume_token(ident);
+            declaration.setLastIdent(YakaTokenManager.identLu);
     jj_consume_token(42);
     valConst();
   }
@@ -110,15 +112,19 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case entier:
       jj_consume_token(entier);
+             declaration.createConstInt(YakaTokenManager.entierLu, token.beginLine);
       break;
     case ident:
       jj_consume_token(ident);
+             declaration.createConstVar(YakaTokenManager.identLu, token.beginLine);
       break;
     case VRAI:
       jj_consume_token(VRAI);
+             declaration.createConstBool(TRUE, token.beginLine);
       break;
     case FAUX:
       jj_consume_token(FAUX);
+             declaration.createConstBool(FALSE, token.beginLine);
       break;
     default:
       jj_la1[3] = jj_gen;
@@ -131,6 +137,7 @@ public class Yaka implements Constante, YakaConstants {
     jj_consume_token(VAR);
     type();
     jj_consume_token(ident);
+            declaration.createVar(YakaTokenManager.identLu, token.beginLine);
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -143,6 +150,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       jj_consume_token(40);
       jj_consume_token(ident);
+                declaration.createVar(YakaTokenManager.identLu, token.beginLine);
     }
     jj_consume_token(41);
   }
@@ -151,9 +159,11 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ENTIER:
       jj_consume_token(ENTIER);
+               declaration.setLastType(eType.ENTIER);
       break;
     case BOOLEEN:
       jj_consume_token(BOOLEEN);
+               declaration.setLastType(eType.BOOLEEN);
       break;
     default:
       jj_la1[5] = jj_gen;
@@ -320,6 +330,7 @@ public class Yaka implements Constante, YakaConstants {
       break;
     case ident:
       jj_consume_token(ident);
+              expression.ajoutTypeFromVar(YakaTokenManager.identLu, token.beginLine);
       break;
     case VRAI:
       jj_consume_token(VRAI);

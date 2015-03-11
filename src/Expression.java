@@ -5,8 +5,10 @@ public class Expression implements Constante {
 
 	private Stack<eType> types;
 	private Stack<eOperande> operateurs;
-	
-	public Expression(){
+	private TabIdent tabIdent;
+
+	public Expression(TabIdent tabIdent){
+		this.tabIdent = tabIdent;
 		operateurs = new Stack<eOperande>();
 		types = new Stack<eType>();
 	}
@@ -17,6 +19,13 @@ public class Expression implements Constante {
 		
 	public void ajoutOp(eOperande c){
 		operateurs.add(c);
+	}
+
+	public void ajoutTypeFromVar(String ident, int line) {
+		if(!tabIdent.existeIdent(ident))
+			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne:" + line + ").");
+		else
+			types.push(tabIdent.chercheIdent(ident).getType());
 	}
 
     public void evaluation(int line) { 

@@ -1,6 +1,7 @@
 public class Ident implements Constante {
-	private String nom;
-	private eType type;
+	protected String nom;
+	protected eType type;
+	protected int valeur;
 	
 	public Ident(String nom, eType type){
 		this.nom = nom;
@@ -13,5 +14,9 @@ public class Ident implements Constante {
 
 	public eType getType() {
 		return type;
+	}
+
+	public int getValeur() {
+		return valeur;
 	}
 }

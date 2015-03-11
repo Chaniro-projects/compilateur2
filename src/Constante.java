@@ -1,12 +1,12 @@
 
 public interface Constante {
-	public static enum eType {
-		BOOLEEN,
-		ENTIER,
+    public static enum eType {
+        BOOLEEN,
+        ENTIER,
         ERREUR
-	}
-	
-	public static enum eOperande {
+    }
+
+    public static enum eOperande {
         PLUS,
         MOINS,
         MULTIPLIER,
@@ -22,4 +22,7 @@ public interface Constante {
         NOT,
         NEG
     }
+
+    public static int TRUE = -1;
+    public static int FALSE = 0;
 }
