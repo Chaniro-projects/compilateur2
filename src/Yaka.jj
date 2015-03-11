@@ -275,8 +275,8 @@ void opMul() : {}
 } 
 
 void opNeg() : {}
-{ "-" 	
- | <NON>	
+{ "-"        { expression.ajoutOp(eOperande.NEG); }
+ | <NON>     { expression.ajoutOp(eOperande.NOT); }
 }
 
 

@@ -3,3 +3,5 @@ bin/*
 .idea/*
 .project
 .classpath
+out/*
+src/Yaka.java
