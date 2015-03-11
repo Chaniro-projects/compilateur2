@@ -146,9 +146,10 @@ TOKEN  :
 /**************************************/
 void prog() : {}
 {
-   <PROGRAMME> <ident>	
+   <PROGRAMME> {yvm.entete();}
+   <ident>	
    bloc()
-   <FPROGRAMME> 
+   <FPROGRAMME> {yvm.queue(); }
 }
 
 void bloc() : {}{
@@ -232,7 +233,7 @@ void terme() : {}
 }
 void facteur() : {}
 {   primaire() 
-  |  opNeg() primaire() 
+  |  opNeg() primaire() {expression.evaluation(token.beginLine);}
 }
 
 void primaire (): {}

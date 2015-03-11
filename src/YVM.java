@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class YVM implements Constante {
-	private OutputStream fo;
+	protected OutputStream fo;
 	
 	public YVM(String nom) {
 		this.fo = Ecriture.ouvrir(nom);

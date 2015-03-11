@@ -19,7 +19,7 @@ public class Expression implements Constante {
 		operateurs.add(c);
 	}
 
-    public void evaluation(int line) { // Rajout er "line" dans la grammaire"
+    public void evaluation(int line) { 
     	eType type1 = types.pop();
 
     	eOperande op = operateurs.pop();

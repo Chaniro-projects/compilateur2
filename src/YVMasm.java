@@ -1,14 +1,10 @@
-import java.io.OutputStream;
-
 public class YVMasm extends YVM implements Constante {
-	private OutputStream fo;
-	
 	public YVMasm(String nom) {
-		this.fo = Ecriture.ouvrir(nom);
+		super(nom);
 	}
 	
 	public YVMasm() {
-		this.fo = System.out;
+		super();
 	}
 	
 	public void fermer() {
@@ -145,6 +141,6 @@ public class YVMasm extends YVM implements Constante {
 	public void queue() {
 		Ecriture.ecrireString(fo, ";");
 		super.queue();
-		Ecriture.ecrireStringln(fo, "nop\nexitcode\nend debut\n");
+		Ecriture.ecrireStringln(fo, "nop\nEXITCODE\nend debut");
 	}
 }

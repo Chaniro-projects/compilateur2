@@ -46,9 +46,11 @@ public class Yaka implements Constante, YakaConstants {
 /**************************************/
   static final public void prog() throws ParseException {
     jj_consume_token(PROGRAMME);
+                yvm.entete();
     jj_consume_token(ident);
     bloc();
     jj_consume_token(FPROGRAMME);
+                 yvm.queue();
   }
 
   static final public void bloc() throws ParseException {
@@ -281,6 +283,7 @@ public class Yaka implements Constante, YakaConstants {
     case 51:
       opNeg();
       primaire();
+                         expression.evaluation(token.beginLine);
       break;
     default:
       jj_la1[12] = jj_gen;
