@@ -50,55 +50,56 @@ public class Expression implements Constante {
     
 public boolean controleOp(eOperande op, eType type, int line) {
     switch(op){
+	    case PLUS:
+	    case MOINS:
+	    case DIVISER:
+	    case MULTIPLIER:
+	    	if (type == eType.ENTIER) {
+	            types.push(eType.ENTIER);
+	            return true;
+	    	}
+	        else if (type == eType.BOOLEEN) {
+	            types.push(eType.ERREUR);
+	        	System.out.println("Erreur à la ligne " + line + ".");
+	        	return false;
+	        }
+	    	break;
+	    case INF:
+	    case INFEGAL:
+	    case SUP:
+	    case SUPEGAL:
+	    	 if (type == eType.ENTIER) {
+	             types.push(eType.BOOLEEN);
+	    	 return true;
+	    	 } else if (type == eType.BOOLEEN){
+	             types.push(eType.ERREUR);
+	         	System.out.println("Erreur à la ligne " + line + ".");
+	         	return false;
+	    	 }
+	         break;
+	    case EGAL:
+	    case DIFF:
+	        if (type == eType.ENTIER){
+	            types.push(eType.BOOLEEN);
+	            return true;
+	        }
+	        else if (type == eType.BOOLEEN){
+	            types.push(eType.BOOLEEN);
+	            return true;
+	        }
+	        break;
+	    case ET:
+	    case OU:
+	        if (type == eType.ENTIER){
+	            types.push(eType.ERREUR);
+	            return false;
+	        }
+	        else if (type == eType.BOOLEEN){
+	            types.push(eType.BOOLEEN);
+	            return true;
+	        }
+		}
     
-    case PLUS:
-    case MOINS:
-    case DIVISER:
-    case MULTIPLIER:
-    	if (type == eType.ENTIER) {
-            types.push(eType.ENTIER);
-            return true;
-    	}
-        else if (type == eType.BOOLEEN) {
-            types.push(eType.ERREUR);
-        	System.out.println("Erreur à la ligne " + line + ".");
-        }
     	return false;
-    
-    case INF:
-    case INFEGAL:
-    case SUP:
-    case SUPEGAL:
-    	 if (type == eType.ENTIER) {
-             types.push(eType.BOOLEEN);
-    	 return true;
-    	 } else if (type == eType.BOOLEEN){
-             types.push(eType.ERREUR);
-         	System.out.println("Erreur à la ligne " + line + ".");
-    	 }
-         return false;
-    
-    case EGAL:
-    case DIFF:
-        if (type == eType.ENTIER){
-            types.push(eType.BOOLEEN);
-            return true;
-        }
-        else if (type == eType.BOOLEEN){
-            types.push(eType.BOOLEEN);
-            return false;
-        }
-    case ET:
-    case OU:
-        if (type == eType.ENTIER){
-            types.push(eType.ERREUR);
-            return true;
-        }
-        else if (type == eType.BOOLEEN){
-            types.push(eType.BOOLEEN);
-            return true;
-        }
-    } return false;
-}
-
+	}
 }
