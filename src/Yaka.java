@@ -412,9 +412,11 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 51:
       jj_consume_token(51);
+               expression.ajoutOp(eOperande.NEG);
       break;
     case NON:
       jj_consume_token(NON);
+               expression.ajoutOp(eOperande.NOT);
       break;
     default:
       jj_la1[18] = jj_gen;

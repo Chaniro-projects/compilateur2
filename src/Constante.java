@@ -18,6 +18,8 @@ public interface Constante {
         EGAL,
         DIFF,
         ET,
-        OU
+        OU,
+        NOT,
+        NEG
     }
 }
