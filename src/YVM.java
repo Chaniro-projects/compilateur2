@@ -3,17 +3,19 @@ import java.io.*;
 public class YVM implements Constante {
 	protected OutputStream fo;
 	
-	public YVM(String nom) {
-		this.fo = Ecriture.ouvrir(nom);
-	}
 	
 	public YVM() {
 		this.fo = System.out;
 	}
 	
+	public YVM(String nom) {
+		this.fo = Ecriture.ouvrir(nom);
+	}
+	
 	public void fermer() {
 		Ecriture.fermer(fo);
 	}
+	
 	
 	public void iadd() {
 		Ecriture.ecrireStringln(fo, "iadd");
@@ -22,7 +24,7 @@ public class YVM implements Constante {
 	public void isub() {
 		Ecriture.ecrireStringln(fo, "isub");
 	}
-
+	
 	public void imul() {
 		Ecriture.ecrireStringln(fo, "imul");
 	}
@@ -83,23 +85,35 @@ public class YVM implements Constante {
 		Ecriture.ecrireStringln(fo, "iconst " + valeur);
 	}
 	
-	public void ifeq(String etiquette) {
-		Ecriture.ecrireStringln(fo, "ifeq " + etiquette);
-	}
-	
-	public void igoto(String etiquette) {
-		Ecriture.ecrireStringln(fo, "goto " + etiquette);
-	}
-	
-	public void ouvrePrinc(int variable) {
-		Ecriture.ecrireStringln(fo, "ouvrePrinc " + 2 * variable);
-	}
-	
 	public void entete() {
 		Ecriture.ecrireStringln(fo, "entete");
 	}
 	
+	public void ouvrePrinc(int variable) {
+		Ecriture.ecrireStringln(fo, "ouvrePrinc " + variable);
+	}
+	
 	public void queue() {
 		Ecriture.ecrireStringln(fo, "queue");
+	}
+	
+	public void aLaLigne() {
+		Ecriture.ecrireStringln(fo, "aLaLigne");
+	}
+	
+	public void ecrireEnt() {
+		Ecriture.ecrireStringln(fo, "ecrireEnt");
+	}
+	
+	public void lireEnt(int offset) {
+		Ecriture.ecrireStringln(fo, "lireEnt " + offset);
+	}
+	
+	public void ecrireChaine(String chaine) {
+		Ecriture.ecrireStringln(fo, "ecrireChaine " + chaine + "");
+	}
+	
+	public void ecrireBool() {
+		Ecriture.ecrireStringln(fo, "ecrireBool");
 	}
 }

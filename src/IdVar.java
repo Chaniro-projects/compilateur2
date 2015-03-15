@@ -1,8 +1,14 @@
-
-public class IdVar extends Ident implements Constante{
+public class IdVar extends Ident {
+	private int offset;
+	
 	
 	public IdVar(String nom, eType type, int offset) {
 		super(nom, type);
-		this.valeur = offset;
+		this.offset = offset;
+	}
+	
+	
+	public int getOffset() {
+		return this.offset;
 	}
 }
