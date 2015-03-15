@@ -117,7 +117,7 @@ public class YVMasm extends YVM implements Constante {
 	public void ifeq(String etiquette) {
 		Ecriture.ecrireString(fo, ";");
 		super.ifeq(etiquette);
-		Ecriture.ecrireString(fo, "ifeq " + etiquette + "\n");
+		Ecriture.ecrireStringln(fo, "ifeq " + etiquette + "\n");
 	}
 	
 	public void igoto(String etiquette) {
@@ -129,11 +129,12 @@ public class YVMasm extends YVM implements Constante {
 	public void ouvrePrinc(int variable) {
 		Ecriture.ecrireString(fo, ";");
 		super.ouvrePrinc(variable);
-		Ecriture.ecrireStringln(fo, "mov bp,sp\nsub sp," + 2 * variable + "\n");
+		Ecriture.ecrireStringln(fo, "mov bp,sp\n");
+		Ecriture.ecrireString(fo, "sub sp," + 2 * variable + "\n");
 	}
 	
 	public void entete(){
-		Ecriture.ecrireString(fo, ";");
+		Ecriture.ecrireStringln(fo, ";");
 		super.entete();
 		Ecriture.ecrireStringln(fo,".model SMALL\n.586\n");
 	}
@@ -141,6 +142,6 @@ public class YVMasm extends YVM implements Constante {
 	public void queue() {
 		Ecriture.ecrireString(fo, ";");
 		super.queue();
-		Ecriture.ecrireStringln(fo, "nop\nEXITCODE\nend debut");
+		Ecriture.ecrireString(fo, "nop\nEXITCODE\nend debut");
 	}
 }

@@ -14,16 +14,22 @@ public class Declaration implements Constante {
         if(tabIdent.existeIdent(lastIdent))
             System.out.println("Erreur: l'ident '" + lastIdent + "' existe deja (ligne:" + line + ").");
         tabIdent.rangeIdent(lastIdent, new IdConst(lastIdent, Constante.eType.ENTIER, v));
-        Yaka.yvm.iconst(v);
     }
 
     public void createConstBool(int b, int line) {
         if(tabIdent.existeIdent(lastIdent))
             System.out.println("Erreur: l'ident '" + lastIdent + "' existe deja (ligne:" + line + ").");
         tabIdent.rangeIdent(lastIdent, new IdConst(lastIdent, Constante.eType.BOOLEEN, b));
-        Yaka.yvm.iconst(b);
     }
 
+    public void appelConst(String ident, int line){
+    	if(!tabIdent.existeIdent(ident))
+    		System.out.println("Erreur, l'ident" + ident + "n'existe pas, erreur à la ligne" + line +".");
+    	Ident i = tabIdent.chercheIdent(ident);
+    	int a = i.getValeur();
+    	Yaka.yvm.iconst(a); 
+    }
+    
     public void createConstVar(String ident, int line) {
         if(!tabIdent.existeIdent(ident))
             System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne:" + line + ").");

@@ -158,6 +158,12 @@ void bloc() : {}{
    suiteExpr() 
 }
 
+/*void bloc() : {}{
+ (declConst())*
+ (declVar())* {yvm.ouvrePrinc(declaration.offset / -2);}
+   suiteInstr() 
+}*/
+
 void declConst() : {}
 {
   <CONST>  defConst() ( "," defConst())* ";"
@@ -194,15 +200,38 @@ void type() :{}
    <ENTIER>  { declaration.setLastType(eType.ENTIER); }
  | <BOOLEEN> { declaration.setLastType(eType.BOOLEEN); }
 }
-/*
- * Syntaxe des instructions.
- */
+
 void suiteExpr() : {}
-{ 
-	(expression() (";" (expression())? )*)? 
+{
+(expression() (";" (expression())? )*)?
 }
 
+/*void suiteInstr() : {}
+{ 
+	instruction() (";" (instruction())? )* 
+}*/
 
+/*void instruction() : {}
+{
+	affectation()
+  | lecture()
+  | ecriture()
+}
+
+void affectation() : {}
+{
+	<ident> "=" expression()
+}
+
+void lecture() : {}
+{
+	<LIRE> "(" <ident> ")"
+}
+
+void ecriture() : {}
+{
+	<ECRIRE> "(" expression() |  <chaine> ")" | <ALALIGNE>
+}*/
 
 /*
  * Expression .
@@ -245,7 +274,7 @@ void primaire (): {}
 
 void valeur () : {}
 { <entier>  { expression.ajoutType(eType.ENTIER); yvm.iconst(YakaTokenManager.entierLu); }
- | <ident>  { expression.ajoutTypeFromVar(YakaTokenManager.identLu, token.beginLine); }
+ | <ident>  { expression.ajoutTypeFromVar(YakaTokenManager.identLu, token.beginLine); declaration.appelConst(YakaTokenManager.identLu,token.beginLine);}
  | <VRAI>   { expression.ajoutType(eType.BOOLEEN); }
  | <FAUX>   { expression.ajoutType(eType.BOOLEEN); }
  
