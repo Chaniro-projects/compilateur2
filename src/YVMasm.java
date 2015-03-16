@@ -1,6 +1,7 @@
 public class YVMasm extends YVM {
 	private int nbMessage;
 	
+	
 	public YVMasm() {
 		super();
 		this.nbMessage = 0;
@@ -162,5 +163,25 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireString(fo, "\t;");
 		super.ecrireBool();
 		Ecriture.ecrireStringln(fo, "\tcall ecrbool\n");
+	}
+	
+	public void faireIteration() {
+		super.faireIteration();
+	}
+	
+	public void faitIteration() {
+		super.faireIteration();
+	}
+	
+	public void iffaux() {
+		Ecriture.ecrireString(fo, "\t;");
+		super.iffaux();
+		Ecriture.ecrireStringln(fo, "\tpop ax\n\tcmpax,0\n\tje FAIT" + Yaka.iteration.lastElement() + "\n");
+	}
+	
+	public void igoto(String etiquette) {
+		Ecriture.ecrireString(fo, "\t;");
+		super.igoto(etiquette);
+		Ecriture.ecrireStringln(fo, "jmp " + etiquette);
 	}
 }

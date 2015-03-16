@@ -11,6 +11,7 @@ public class Yaka implements Constante {
 	public static Expression expression = new Expression();
 	public static Affectation affectation = new Affectation();
 	public static EntreeSortie entreeSortie = new EntreeSortie();
+	public static Iteration iteration = new Iteration();
 	public static YVMasm yvm;
 
 	public static void main(String args[]) {
@@ -169,6 +170,7 @@ void suiteInstr() :{} {
 
 void instruction() :{} {
 	affectation()
+|	iteration()
 |	lecture()
 |	ecriture()
 }
@@ -177,6 +179,14 @@ void affectation() :{} {
 	<ident> { affectation.setIdentAffectation(YakaTokenManager.identLu); } 
 	"="
 	expression() { affectation.affectation(); }
+}
+
+void iteration() :{} {
+	<TANTQUE> 
+	expression() { iteration.verifierExpression(); }
+	<FAIRE>
+	suiteInstr() { iteration.fait(); }
+	<FAIT>
 }
 
 void lecture() :{} {

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Stack;
 
 public class YVM implements Constante {
 	protected OutputStream fo;
@@ -115,5 +116,21 @@ public class YVM implements Constante {
 	
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(fo, "ecrireBool");
+	}
+	
+	public void faireIteration() {
+		Ecriture.ecrireStringln(fo, "FAIRE" + Yaka.iteration.lastElement() + ":");
+	}
+	
+	public void faitIteration() {
+		Ecriture.ecrireStringln(fo, "FAIT" + Yaka.iteration.lastElement() + ":");
+	}
+	
+	public void iffaux() {
+		Ecriture.ecrireStringln(fo, "iffaux FAIT" + Yaka.iteration.lastElement());
+	}
+	
+	public void igoto(String etiquette) {
+		Ecriture.ecrireStringln(fo, "goto " + etiquette);
 	}
 }

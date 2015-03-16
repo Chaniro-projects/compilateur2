@@ -7,6 +7,7 @@ public class Yaka implements Constante, YakaConstants {
         public static Expression expression = new Expression();
         public static Affectation affectation = new Affectation();
         public static EntreeSortie entreeSortie = new EntreeSortie();
+        public static Iteration iteration = new Iteration();
         public static YVMasm yvm;
 
         public static void main(String args[]) {
@@ -39,7 +40,7 @@ public class Yaka implements Constante, YakaConstants {
                         System.out.println("Analyse syntaxique r\u00e9ussie !");
                 } catch (ParseException e) {
                         String message = e.getMessage();
-                        message = message.substring(0, message.indexOf("\u005cn"));
+                        message = message.substring(0, message.indexOf("\n"));
                         System.out.println("Erreur de syntaxe : " + message);
                 }
         }
@@ -174,6 +175,7 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void suiteInstr() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case TANTQUE:
     case ECRIRE:
     case LIRE:
     case ALALIGNE:
@@ -191,6 +193,7 @@ public class Yaka implements Constante, YakaConstants {
         }
         jj_consume_token(41);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case TANTQUE:
         case ECRIRE:
         case LIRE:
         case ALALIGNE:
@@ -214,6 +217,9 @@ public class Yaka implements Constante, YakaConstants {
     case ident:
       affectation();
       break;
+    case TANTQUE:
+      iteration();
+      break;
     case LIRE:
       lecture();
       break;
@@ -234,6 +240,16 @@ public class Yaka implements Constante, YakaConstants {
     jj_consume_token(42);
     expression();
                        affectation.affectation();
+  }
+
+  static final public void iteration() throws ParseException {
+    jj_consume_token(TANTQUE);
+    expression();
+                       iteration.verifierExpression();
+    jj_consume_token(FAIRE);
+    suiteInstr();
+                       iteration.fait();
+    jj_consume_token(FAIT);
   }
 
   static final public void lecture() throws ParseException {
@@ -501,38 +517,32 @@ public class Yaka implements Constante, YakaConstants {
   }
 
   static private boolean jj_initialized_once = false;
-  /** Generated Token Manager. */
   static public YakaTokenManager token_source;
   static SimpleCharStream jj_input_stream;
-  /** Current token. */
-  static public Token token;
-  /** Next token. */
-  static public Token jj_nt;
+  static public Token token, jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
   static final private int[] jj_la1 = new int[22];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
-      jj_la1_init_0();
-      jj_la1_init_1();
+      jj_la1_0();
+      jj_la1_1();
    }
-   private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x0,0x0,0x0,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
+   private static void jj_la1_0() {
+      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x40000,0x40000,0x40000,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
    }
-   private static void jj_la1_init_1() {
+   private static void jj_la1_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x100,0x50,0x100,0x0,0x200,0x47,0x47,0x47,0x808d0,0x5,0x3e400,0xc0000,0x300000,0x80850,0x850,0x50,0x3e400,0xc0000,0x300000,0x80000,};
    }
 
-  /** Constructor with InputStream. */
   public Yaka(java.io.InputStream stream) {
      this(stream, null);
   }
-  /** Constructor with InputStream and supplied encoding */
   public Yaka(java.io.InputStream stream, String encoding) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser.  ");
-      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("ERROR: Second call to constructor of static parser.  You must");
+      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
       System.out.println("       during parser generation.");
       throw new Error();
     }
@@ -545,11 +555,9 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  /** Reinitialise. */
   static public void ReInit(java.io.InputStream stream) {
      ReInit(stream, null);
   }
-  /** Reinitialise. */
   static public void ReInit(java.io.InputStream stream, String encoding) {
     try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
@@ -559,11 +567,10 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  /** Constructor. */
   public Yaka(java.io.Reader stream) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser. ");
-      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("ERROR: Second call to constructor of static parser.  You must");
+      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
       System.out.println("       during parser generation.");
       throw new Error();
     }
@@ -576,7 +583,6 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  /** Reinitialise. */
   static public void ReInit(java.io.Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
@@ -586,11 +592,10 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  /** Constructor with generated Token Manager. */
   public Yaka(YakaTokenManager tm) {
     if (jj_initialized_once) {
-      System.out.println("ERROR: Second call to constructor of static parser. ");
-      System.out.println("       You must either use ReInit() or set the JavaCC option STATIC to false");
+      System.out.println("ERROR: Second call to constructor of static parser.  You must");
+      System.out.println("       either use ReInit() or set the JavaCC option STATIC to false");
       System.out.println("       during parser generation.");
       throw new Error();
     }
@@ -602,7 +607,6 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  /** Reinitialise. */
   public void ReInit(YakaTokenManager tm) {
     token_source = tm;
     token = new Token();
@@ -611,7 +615,7 @@ public class Yaka implements Constante, YakaConstants {
     for (int i = 0; i < 22; i++) jj_la1[i] = -1;
   }
 
-  static private Token jj_consume_token(int kind) throws ParseException {
+  static final private Token jj_consume_token(int kind) throws ParseException {
     Token oldToken;
     if ((oldToken = token).next != null) token = token.next;
     else token = token.next = token_source.getNextToken();
@@ -625,8 +629,6 @@ public class Yaka implements Constante, YakaConstants {
     throw generateParseException();
   }
 
-
-/** Get the next Token. */
   static final public Token getNextToken() {
     if (token.next != null) token = token.next;
     else token = token.next = token_source.getNextToken();
@@ -635,7 +637,6 @@ public class Yaka implements Constante, YakaConstants {
     return token;
   }
 
-/** Get the specific Token. */
   static final public Token getToken(int index) {
     Token t = token;
     for (int i = 0; i < index; i++) {
@@ -645,21 +646,23 @@ public class Yaka implements Constante, YakaConstants {
     return t;
   }
 
-  static private int jj_ntk() {
+  static final private int jj_ntk() {
     if ((jj_nt=token.next) == null)
       return (jj_ntk = (token.next=token_source.getNextToken()).kind);
     else
       return (jj_ntk = jj_nt.kind);
   }
 
-  static private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
+  static private java.util.Vector<int[]> jj_expentries = new java.util.Vector<int[]>();
   static private int[] jj_expentry;
   static private int jj_kind = -1;
 
-  /** Generate ParseException. */
   static public ParseException generateParseException() {
-    jj_expentries.clear();
+    jj_expentries.removeAllElements();
     boolean[] la1tokens = new boolean[54];
+    for (int i = 0; i < 54; i++) {
+      la1tokens[i] = false;
+    }
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -680,21 +683,19 @@ public class Yaka implements Constante, YakaConstants {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
-        jj_expentries.add(jj_expentry);
+        jj_expentries.addElement(jj_expentry);
       }
     }
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
-      exptokseq[i] = jj_expentries.get(i);
+      exptokseq[i] = (int[])jj_expentries.elementAt(i);
     }
     return new ParseException(token, exptokseq, tokenImage);
   }
 
-  /** Enable tracing. */
   static final public void enable_tracing() {
   }
 
-  /** Disable tracing. */
   static final public void disable_tracing() {
   }
 
