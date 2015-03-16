@@ -4,6 +4,11 @@ public class Iteration implements Constante {
 	protected int nbIterations;
 	protected Stack<Integer> iterations;
 	
+	public Iteration() {
+		this.nbIterations = 0;
+		this.iterations = new Stack<Integer>();
+	}
+	
 	public void verifierExpression() {
 		eType expressionType = Yaka.expression.type();
 		
