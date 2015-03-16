@@ -9,27 +9,27 @@ public class Iteration implements Constante {
 		this.iterations = new Stack<Integer>();
 	}
 	
+	
+	public void faire() {
+		this.iterations.push(++this.nbIterations);
+		Yaka.yvm.etiquette("FAIRE" + this.iterations.lastElement());
+	}
+	
 	public void verifierExpression() {
 		eType expressionType = Yaka.expression.type();
 		
-		this.iterations.push(this.nbIterations++);
-		
-		if (expressionType == eType.BOOLEEN) {
-			Yaka.yvm.faireIteration();
-			Yaka.yvm.iffaux();
-		}
-		else {
-			System.out.println("Erreur : une itération attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
-		}
+		if (expressionType == eType.BOOLEEN)
+			Yaka.yvm.iffaux("FAIT" + this.iterations.lastElement());
+		else
+			System.out.println("Erreur : une iteration attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
+	}
+	
+	public void igoto() {
+		Yaka.yvm.igoto("FAIRE" + this.iterations.lastElement());
 	}
 	
 	public void fait() {
-		Yaka.yvm.igoto("FAIT" + this.iterations.lastElement());
-		Yaka.yvm.faitIteration();
+		Yaka.yvm.etiquette("FAIT" + this.iterations.lastElement());
 		this.iterations.pop();
-	}
-	
-	public Integer lastElement() {
-		return this.iterations.lastElement();
 	}
 }

@@ -12,6 +12,7 @@ public class Yaka implements Constante {
 	public static Affectation affectation = new Affectation();
 	public static EntreeSortie entreeSortie = new EntreeSortie();
 	public static Iteration iteration = new Iteration();
+	public static Condition condition = new Condition();
 	public static YVMasm yvm;
 
 	public static void main(String args[]) {
@@ -171,6 +172,7 @@ void suiteInstr() :{} {
 void instruction() :{} {
 	affectation()
 |	iteration()
+|	condition()
 |	lecture()
 |	ecriture()
 }
@@ -182,11 +184,23 @@ void affectation() :{} {
 }
 
 void iteration() :{} {
-	<TANTQUE> 
+	<TANTQUE> { iteration.faire(); }
 	expression() { iteration.verifierExpression(); }
 	<FAIRE>
-	suiteInstr() { iteration.fait(); }
-	<FAIT>
+	suiteInstr() { iteration.igoto(); }
+	<FAIT> { iteration.fait(); }
+}
+
+void condition() :{} {
+	<SI> { condition.si(); }
+	expression() { condition.verifierExpression(); }
+	<ALORS>
+	suiteInstr() { condition.igoto(); }
+	(
+	  	<SINON> { condition.sinon(); }
+	  	suiteInstr()
+	)?
+	<FSI> { condition.fsi(); }
 }
 
 void lecture() :{} {

@@ -165,23 +165,19 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(fo, "\tcall ecrbool\n");
 	}
 	
-	public void faireIteration() {
-		super.faireIteration();
+	public void etiquette(String etiquette) {
+		super.etiquette(etiquette);
 	}
 	
-	public void faitIteration() {
-		super.faireIteration();
-	}
-	
-	public void iffaux() {
+	public void iffaux(String etiquette) {
 		Ecriture.ecrireString(fo, "\t;");
-		super.iffaux();
-		Ecriture.ecrireStringln(fo, "\tpop ax\n\tcmpax,0\n\tje FAIT" + Yaka.iteration.lastElement() + "\n");
+		super.iffaux(etiquette);
+		Ecriture.ecrireStringln(fo, "\tpop ax\n\tcmp ax,0\n\tje " + etiquette + "\n");
 	}
 	
 	public void igoto(String etiquette) {
 		Ecriture.ecrireString(fo, "\t;");
 		super.igoto(etiquette);
-		Ecriture.ecrireStringln(fo, "jmp " + etiquette);
+		Ecriture.ecrireStringln(fo, "\tjmp " + etiquette);
 	}
 }

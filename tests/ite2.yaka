@@ -1,0 +1,16 @@
+PROGRAMME iter2
+VAR ENTIER i,j;
+	i = 0;
+	TANTQUE i <= 20 FAIRE
+		ECRIRE(i);
+		
+		i = i + 1;
+		j = i;
+		ECRIRE(" : ");
+		TANTQUE j > 0 FAIRE
+			ECRIRE("a");
+			j = j - 1;
+		FAIT;
+		ALALIGNE;
+	FAIT;
+FPROGRAMME

@@ -8,6 +8,7 @@ public class Yaka implements Constante, YakaConstants {
         public static Affectation affectation = new Affectation();
         public static EntreeSortie entreeSortie = new EntreeSortie();
         public static Iteration iteration = new Iteration();
+        public static Condition condition = new Condition();
         public static YVMasm yvm;
 
         public static void main(String args[]) {
@@ -175,6 +176,7 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void suiteInstr() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case SI:
     case TANTQUE:
     case ECRIRE:
     case LIRE:
@@ -193,6 +195,7 @@ public class Yaka implements Constante, YakaConstants {
         }
         jj_consume_token(41);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SI:
         case TANTQUE:
         case ECRIRE:
         case LIRE:
@@ -220,6 +223,9 @@ public class Yaka implements Constante, YakaConstants {
     case TANTQUE:
       iteration();
       break;
+    case SI:
+      condition();
+      break;
     case LIRE:
       lecture();
       break;
@@ -244,12 +250,36 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void iteration() throws ParseException {
     jj_consume_token(TANTQUE);
+                    iteration.faire();
     expression();
                        iteration.verifierExpression();
     jj_consume_token(FAIRE);
     suiteInstr();
-                       iteration.fait();
+                       iteration.igoto();
     jj_consume_token(FAIT);
+                 iteration.fait();
+  }
+
+  static final public void condition() throws ParseException {
+    jj_consume_token(SI);
+               condition.si();
+    expression();
+                       condition.verifierExpression();
+    jj_consume_token(ALORS);
+    suiteInstr();
+                       condition.igoto();
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case SINON:
+      jj_consume_token(SINON);
+                          condition.sinon();
+      suiteInstr();
+      break;
+    default:
+      jj_la1[10] = jj_gen;
+      ;
+    }
+    jj_consume_token(FSI);
+                condition.fsi();
   }
 
   static final public void lecture() throws ParseException {
@@ -281,7 +311,7 @@ public class Yaka implements Constante, YakaConstants {
                            entreeSortie.ecrire(YakaTokenManager.chaineLue);
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -292,7 +322,7 @@ public class Yaka implements Constante, YakaConstants {
                      entreeSortie.aLaLigne();
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[12] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -312,7 +342,7 @@ public class Yaka implements Constante, YakaConstants {
                                 expression.evaluation();
       break;
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
   }
@@ -328,7 +358,7 @@ public class Yaka implements Constante, YakaConstants {
         ;
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_6;
       }
       opAdd();
@@ -348,7 +378,7 @@ public class Yaka implements Constante, YakaConstants {
         ;
         break;
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         break label_7;
       }
       opMul();
@@ -373,7 +403,7 @@ public class Yaka implements Constante, YakaConstants {
                      expression.evaluation();
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -393,7 +423,7 @@ public class Yaka implements Constante, YakaConstants {
       jj_consume_token(44);
       break;
     default:
-      jj_la1[16] = jj_gen;
+      jj_la1[17] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -418,7 +448,7 @@ public class Yaka implements Constante, YakaConstants {
                  expression.ajoutType(eType.BOOLEEN, FALSE);
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -451,7 +481,7 @@ public class Yaka implements Constante, YakaConstants {
                expression.ajoutOperateur(eOperande.SUPEGAL);
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[19] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -472,7 +502,7 @@ public class Yaka implements Constante, YakaConstants {
                expression.ajoutOperateur(eOperande.OR);
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -493,7 +523,7 @@ public class Yaka implements Constante, YakaConstants {
                expression.ajoutOperateur(eOperande.AND);
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -510,7 +540,7 @@ public class Yaka implements Constante, YakaConstants {
                 expression.ajoutOperateur(eOperande.NOT);
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[22] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -522,7 +552,7 @@ public class Yaka implements Constante, YakaConstants {
   static public Token token, jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[22];
+  static final private int[] jj_la1 = new int[23];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -530,10 +560,10 @@ public class Yaka implements Constante, YakaConstants {
       jj_la1_1();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x40000,0x40000,0x40000,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
+      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x42000,0x42000,0x42000,0x800,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x100,0x50,0x100,0x0,0x200,0x47,0x47,0x47,0x808d0,0x5,0x3e400,0xc0000,0x300000,0x80850,0x850,0x50,0x3e400,0xc0000,0x300000,0x80000,};
+      jj_la1_1 = new int[] {0x0,0x0,0x100,0x50,0x100,0x0,0x200,0x47,0x47,0x47,0x0,0x808d0,0x5,0x3e400,0xc0000,0x300000,0x80850,0x850,0x50,0x3e400,0xc0000,0x300000,0x80000,};
    }
 
   public Yaka(java.io.InputStream stream) {
@@ -552,7 +582,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   static public void ReInit(java.io.InputStream stream) {
@@ -564,7 +594,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   public Yaka(java.io.Reader stream) {
@@ -580,7 +610,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   static public void ReInit(java.io.Reader stream) {
@@ -589,7 +619,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   public Yaka(YakaTokenManager tm) {
@@ -604,7 +634,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(YakaTokenManager tm) {
@@ -612,7 +642,7 @@ public class Yaka implements Constante, YakaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 22; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 23; i++) jj_la1[i] = -1;
   }
 
   static final private Token jj_consume_token(int kind) throws ParseException {
@@ -667,7 +697,7 @@ public class Yaka implements Constante, YakaConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 22; i++) {
+    for (int i = 0; i < 23; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

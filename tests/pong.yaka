@@ -1,0 +1,66 @@
+PROGRAMME pong
+CONST xmax=40,
+    ymax=14;
+VAR ENTIER x,y,vx,vy,i,j,k,l,wait;
+    vx=1;
+    vy=1;
+	
+	LIRE(wait);
+
+    TANTQUE VRAI FAIRE
+        SI x=xmax ALORS
+            SI vx > 0 ALORS
+				vx=vx*-1;
+			FSI ;
+        FSI ;
+        SI x=0 ALORS
+            SI vx < 0 ALORS
+				vx=vx*-1;
+			FSI ;
+        FSI ;
+        SI y=ymax ALORS
+            SI vy > 0 ALORS
+				vy=vy*-1;
+			FSI ;
+        FSI ;
+        SI y=0  ALORS
+            SI vy < 0 ALORS
+				vy=vy*-1;
+			FSI ;
+        FSI ;
+
+        x=x+vx;
+        y=y+vy;
+
+        i=y;
+        TANTQUE i>0 FAIRE
+            ALALIGNE;
+            i=i-1;
+        FAIT;
+
+        i=x-2;
+        ECRIRE("|");
+        TANTQUE i>0 FAIRE
+            ECRIRE(" ");
+            i=i-1;
+        FAIT;
+
+        ECRIRE("o");
+
+		j=100
+		TANTQUE j>0 FAIRE
+			ECRIRE("\n");
+			j=j-1;
+		FAIT;
+
+		i=wait;
+        TANTQUE i>0 FAIRE
+			j=wait;
+			TANTQUE j>0 FAIRE
+				j=j-1;
+			FAIT;
+            i=i-1;
+        FAIT;
+
+    FAIT;
+FPROGRAMME

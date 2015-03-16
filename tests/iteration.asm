@@ -40,6 +40,7 @@ mess0 DB "n=$"
 	pop ax
 	mov word ptr [bp-2],ax
 
+FAIRE1:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -55,11 +56,10 @@ mess0 DB "n=$"
 	jmp $+4
 	push 0
 
-FAIRE0:
-	;iffaux FAIT0
+	;iffaux FAIT1
 	pop ax
 	cmpax,0
-	je FAIT0
+	je FAIT1
 
 	;iload -2
 	push word ptr [bp-2]
@@ -77,6 +77,7 @@ FAIRE0:
 	pop ax
 	mov word ptr [bp-2],ax
 
+FAIRE2:
 	;iload -8
 	push word ptr [bp-8]
 
@@ -92,11 +93,10 @@ FAIRE0:
 	jmp $+4
 	push 0
 
-FAIRE1:
-	;iffaux FAIT1
+	;iffaux FAIT2
 	pop ax
 	cmpax,0
-	je FAIT1
+	je FAIT2
 
 	;iload -8
 	push word ptr [bp-8]
@@ -114,9 +114,9 @@ FAIRE1:
 	pop ax
 	mov word ptr [bp-8],ax
 
-	;goto FAIT1
-jmp FAIT1
-FAIRE1:
+	;goto FAIRE2
+jmp FAIRE2
+FAIT2:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -133,9 +133,9 @@ FAIRE1:
 	pop ax
 	mov word ptr [bp-4],ax
 
-	;goto FAIT0
-jmp FAIT0
-FAIRE0:
+	;goto FAIRE1
+jmp FAIRE1
+FAIT1:
 	;aLaLigne
 	call ligsuiv
 
@@ -167,6 +167,7 @@ mess1 DB "s=$"
 	pop ax
 	mov word ptr [bp-2],ax
 
+FAIRE3:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -182,11 +183,10 @@ mess1 DB "s=$"
 	jmp $+4
 	push 0
 
-FAIRE2:
-	;iffaux FAIT2
+	;iffaux FAIT3
 	pop ax
 	cmpax,0
-	je FAIT2
+	je FAIT3
 
 	;iload -2
 	push word ptr [bp-2]
@@ -204,6 +204,7 @@ FAIRE2:
 	pop ax
 	mov word ptr [bp-2],ax
 
+FAIRE4:
 	;iload -8
 	push word ptr [bp-8]
 
@@ -219,11 +220,10 @@ FAIRE2:
 	jmp $+4
 	push 0
 
-FAIRE3:
-	;iffaux FAIT3
+	;iffaux FAIT4
 	pop ax
 	cmpax,0
-	je FAIT3
+	je FAIT4
 
 	;iload -8
 	push word ptr [bp-8]
@@ -241,9 +241,9 @@ FAIRE3:
 	pop ax
 	mov word ptr [bp-8],ax
 
-	;goto FAIT3
-jmp FAIT3
-FAIRE3:
+	;goto FAIRE4
+jmp FAIRE4
+FAIT4:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -260,9 +260,9 @@ FAIRE3:
 	pop ax
 	mov word ptr [bp-4],ax
 
-	;goto FAIT2
-jmp FAIT2
-FAIRE2:
+	;goto FAIRE3
+jmp FAIRE3
+FAIT3:
 	;queue
 	nop
 	EXITCODE

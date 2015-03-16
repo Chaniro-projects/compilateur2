@@ -118,16 +118,12 @@ public class YVM implements Constante {
 		Ecriture.ecrireStringln(fo, "ecrireBool");
 	}
 	
-	public void faireIteration() {
-		Ecriture.ecrireStringln(fo, "FAIRE" + Yaka.iteration.lastElement() + ":");
+	public void etiquette(String etiquette) {
+		Ecriture.ecrireStringln(fo, etiquette + ":");
 	}
 	
-	public void faitIteration() {
-		Ecriture.ecrireStringln(fo, "FAIT" + Yaka.iteration.lastElement() + ":");
-	}
-	
-	public void iffaux() {
-		Ecriture.ecrireStringln(fo, "iffaux FAIT" + Yaka.iteration.lastElement());
+	public void iffaux(String etiquette) {
+		Ecriture.ecrireStringln(fo, "iffaux " + etiquette);
 	}
 	
 	public void igoto(String etiquette) {

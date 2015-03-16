@@ -1,0 +1,100 @@
+Turbo Assembler	 Version 4.1	    03/16/15 15:03:50	    Page 1
+cond.asm
+
+
+
+      1					 ;entete
+      2					 extrn lirent:proc, ecrent:proc
+      3					 extrn ecrbool:proc
+      4					 extrn ecrch:proc, ligsuiv:proc
+      5	    0000			 .model	SMALL
+      6					 .586
+      7
+      8	    0000			 .CODE
+      9	    0000			 debut:
+     10						 STARTUPCODE
+1    11	    0000			 @Startup:
+1    12	    0000  BA 0000s			 MOV	 DX,@data
+1    13	    0003  8E DA				 MOV	 DS,DX
+1    14	    0005  8C D3				 MOV	 BX,SS
+1    15	    0007  2B DA				 SUB	 BX,DX
+1    16	    0009  C1 E3	04			 SHL	 BX,4
+1    17	    000C  8E D2				 MOV	 SS,DX
+1    18	    000E  03 E3				 ADD	 SP,BX
+     19
+     20						 ;ouvrePrinc 6
+     21	    0010  8B EC				 mov bp,sp
+     22	    0012  83 EC	06			 sub sp,6
+     23
+     24						 ;lireEnt -2
+     25	    0015  8D 56	FE			 lea dx,[bp-2]
+     26	    0018  52				 push dx
+     27	    0019  E8 0000e			 call lirent
+     28
+     29						 ;aLaLigne
+     30	    001C  E8 0000e			 call ligsuiv
+     31
+     32						 ;lireEnt -4
+     33	    001F  8D 56	FC			 lea dx,[bp-4]
+     34	    0022  52				 push dx
+     35	    0023  E8 0000e			 call lirent
+     36
+     37						 ;aLaLigne
+     38	    0026  E8 0000e			 call ligsuiv
+     39
+     40						 ;iload	-4
+     41	    0029  FF 76	FC			 push word ptr [bp-4]
+     42
+     43						 ;istore -6
+     44	    002C  58				 pop ax
+     45	    002D  89 46	FA			 mov word ptr [bp-6],ax
+     46
+     47						 ;iload	-2
+     48	    0030  FF 76	FE			 push word ptr [bp-2]
+     49
+     50						 ;iload	-4
+     51	    0033  FF 76	FC			 push word ptr [bp-4]
+     52
+     53						 ;isup
+     54	    0036  5B				 pop bx
+     55	    0037  58				 pop ax
+     56	    0038  3B C3				 cmp ax,bx
+     57	    003A  7E 04				 jle $+6
+Turbo Assembler	 Version 4.1	    03/16/15 15:03:50	    Page 2
+cond.asm
+
+
+
+     58	    003C  6A FF				 push -1
+     59	    003E  EB 02				 jmp $+4
+     60	    0040  6A 00				 push 0
+     61
+     62						 ;iffaux SINON1
+     63	    0042  58				 pop ax
+     64	    0043  3D 0000			 cmp ax,0
+     65	    0046  74 0C	90 90			 je SINON1
+     66
+     67						 ;iload	-2
+     68	    004A  FF 76	FE			 push word ptr [bp-2]
+     69
+     70						 ;istore -6
+     71	    004D  58				 pop ax
+     72	    004E  89 46	FA			 mov word ptr [bp-6],ax
+     73
+     74						 ;goto FSI1
+     75	    0051  EB 01	90			 jmp FSI1
+     76	    0054			 SINON1:
+     77	    0054			 FSI1:
+     78						 ;iload	-6
+     79	    0054  FF 76	FA			 push word ptr [bp-6]
+     80
+     81						 ;ecrireEnt
+     82	    0057  E8 0000e			 call ecrent
+     83
+     84						 ;queue
+     85	    005A  90				 nop
+     86						 EXITCODE
+1    87	    005B  B4 4C				 MOV	 AH,4Ch
+1    88	    005D  CD 21				 INT	 21h
+     89						 end debut
+

@@ -1,0 +1,34 @@
+entete
+ouvrePrinc 4
+iconst 0
+istore -2
+FAIRE1:
+iload -2
+iconst 20
+iinfegal
+iffaux FAIT1
+iload -2
+ecrireEnt
+iload -2
+iconst 1
+iadd
+istore -2
+iload -2
+istore -4
+ecrireChaine " : "
+FAIRE2:
+iload -4
+iconst 0
+isup
+iffaux FAIT2
+ecrireChaine "a"
+iload -4
+iconst 1
+isub
+istore -4
+goto FAIRE2
+FAIT2:
+aLaLigne
+goto FAIRE1
+FAIT1:
+queue
