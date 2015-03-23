@@ -3,16 +3,13 @@ import java.util.Stack;
 public class Condition implements Constante {
 	protected int nbConditions;
 	protected Stack<Integer> conditions;
-	protected Stack<Boolean> sinon;
 	
 	public Condition() {
 		this.nbConditions = 0;
 		this.conditions = new Stack<Integer>();
-		this.sinon = new Stack<Boolean>();
 	}
 	
 	public void si() {
-		this.sinon.push(false);
 		this.conditions.push(++this.nbConditions);
 	}
 	
@@ -30,14 +27,11 @@ public class Condition implements Constante {
 	}
 	
 	public void sinon() {
-		this.sinon.pop();
-		this.sinon.push(true);
 		Yaka.yvm.etiquette("SINON" + this.conditions.lastElement());
 	}
 	
 	public void fsi() {
-		if(!this.sinon.pop())
-			Yaka.yvm.etiquette("SINON" + this.conditions.lastElement());
-		Yaka.yvm.etiquette("FSI" + this.conditions.pop());
+		Yaka.yvm.etiquette("FSI" + this.conditions.lastElement());
+		this.conditions.pop();
 	}
 }

@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Stack;
 
 public class YVM implements Constante {
 	protected OutputStream fo;
@@ -111,7 +110,7 @@ public class YVM implements Constante {
 	}
 	
 	public void ecrireChaine(String chaine) {
-		Ecriture.ecrireStringln(fo, "ecrireChaine " + chaine + "");
+		Ecriture.ecrireStringln(fo, "ecrireChaine " + chaine);
 	}
 	
 	public void ecrireBool() {

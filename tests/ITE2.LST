@@ -1,5 +1,5 @@
-Turbo Assembler	 Version 4.1	    03/16/15 14:08:22	    Page 1
-ite2.asm
+Turbo Assembler	 Version 4.1	    03/23/15 13:40:48	    Page 1
+ITE2.ASM
 
 
 
@@ -60,8 +60,8 @@ ite2.asm
      55						 ;ecrireEnt
      56	    0037  E8 0000e			 call ecrent
      57
-Turbo Assembler	 Version 4.1	    03/16/15 14:08:22	    Page 2
-ite2.asm
+Turbo Assembler	 Version 4.1	    03/23/15 13:40:48	    Page 2
+ITE2.ASM
 
 
 
@@ -122,8 +122,8 @@ ite2.asm
     112	    0004  61 24			 mess1 DB "a$"
     113	    0006			 .CODE
     114	    006F  BA 0004r			 lea dx,mess1
-Turbo Assembler	 Version 4.1	    03/16/15 14:08:22	    Page 3
-ite2.asm
+Turbo Assembler	 Version 4.1	    03/23/15 13:40:48	    Page 3
+ITE2.ASM
 
 
 
@@ -147,13 +147,13 @@ ite2.asm
     132	    0081  89 46	FC			 mov word ptr [bp-4],ax
     133
     134						 ;goto FAIRE2
-    135	    0084  EB D0			 jmp FAIRE2
+    135	    0084  EB D0				 jmp FAIRE2
     136	    0086			 FAIT2:
     137						 ;aLaLigne
     138	    0086  E8 0000e			 call ligsuiv
     139
     140						 ;goto FAIRE1
-    141	    0089  EB 90			 jmp FAIRE1
+    141	    0089  EB 90				 jmp FAIRE1
     142	    008B			 FAIT1:
     143						 ;queue
     144	    008B  90				 nop

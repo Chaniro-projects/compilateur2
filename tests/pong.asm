@@ -9,9 +9,9 @@ extrn ecrch:proc, ligsuiv:proc
 debut:
 	STARTUPCODE
 
-	;ouvrePrinc 18
+	;ouvrePrinc 10
 	mov bp,sp
-	sub sp,18
+	sub sp,10
 
 	;iconst 1
 	push word ptr 1
@@ -26,11 +26,6 @@ debut:
 	;istore -8
 	pop ax
 	mov word ptr [bp-8],ax
-
-	;lireEnt -18
-	lea dx,[bp-18]
-	push dx
-	call lirent
 
 FAIRE1:
 	;iconst -1
@@ -56,11 +51,6 @@ FAIRE1:
 	jmp $+4
 	push 0
 
-	;iffaux SINON1
-	pop ax
-	cmp ax,0
-	je SINON1
-
 	;iload -6
 	push word ptr [bp-6]
 
@@ -75,6 +65,79 @@ FAIRE1:
 	push -1
 	jmp $+4
 	push 0
+
+	;iand
+	pop bx
+	pop ax
+	and ax,bx
+	push ax
+
+	;iffaux SINON1
+	pop ax
+	cmp ax,0
+	je SINON1
+
+	;iload -6
+	push word ptr [bp-6]
+
+	;iconst 1
+	push word ptr 1
+
+	;ineg
+	pop bx
+	mov ax,0
+	sub ax,bx
+	push ax
+
+	;imul
+	pop bx
+	pop ax
+	imul bx
+	push ax
+
+	;istore -6
+	pop ax
+	mov word ptr [bp-6],ax
+
+	;goto FSI1
+	jmp FSI1
+SINON1:
+FSI1:
+	;iload -2
+	push word ptr [bp-2]
+
+	;iconst 0
+	push word ptr 0
+
+	;iegal
+	pop bx
+	pop ax
+	cmp ax,bx
+	jne $+6
+	push -1
+	jmp $+4
+	push 0
+
+	;iload -6
+	push word ptr [bp-6]
+
+	;iconst 0
+	push word ptr 0
+
+	;iinf
+	pop bx
+	pop ax
+	cmp ax,bx
+	jge $+6
+	push -1
+	jmp $+4
+	push 0
+
+	;iand
+	pop bx
+	pop ax
+	and ax,bx
+	push ax
 
 	;iffaux SINON2
 	pop ax
@@ -107,80 +170,6 @@ FAIRE1:
 	jmp FSI2
 SINON2:
 FSI2:
-	;goto FSI1
-	jmp FSI1
-SINON1:
-FSI1:
-	;iload -2
-	push word ptr [bp-2]
-
-	;iconst 0
-	push word ptr 0
-
-	;iegal
-	pop bx
-	pop ax
-	cmp ax,bx
-	jne $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux SINON3
-	pop ax
-	cmp ax,0
-	je SINON3
-
-	;iload -6
-	push word ptr [bp-6]
-
-	;iconst 0
-	push word ptr 0
-
-	;iinf
-	pop bx
-	pop ax
-	cmp ax,bx
-	jge $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux SINON4
-	pop ax
-	cmp ax,0
-	je SINON4
-
-	;iload -6
-	push word ptr [bp-6]
-
-	;iconst 1
-	push word ptr 1
-
-	;ineg
-	pop bx
-	mov ax,0
-	sub ax,bx
-	push ax
-
-	;imul
-	pop bx
-	pop ax
-	imul bx
-	push ax
-
-	;istore -6
-	pop ax
-	mov word ptr [bp-6],ax
-
-	;goto FSI4
-	jmp FSI4
-SINON4:
-FSI4:
-	;goto FSI3
-	jmp FSI3
-SINON3:
-FSI3:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -195,11 +184,6 @@ FSI3:
 	push -1
 	jmp $+4
 	push 0
-
-	;iffaux SINON5
-	pop ax
-	cmp ax,0
-	je SINON5
 
 	;iload -8
 	push word ptr [bp-8]
@@ -216,10 +200,16 @@ FSI3:
 	jmp $+4
 	push 0
 
-	;iffaux SINON6
+	;iand
+	pop bx
+	pop ax
+	and ax,bx
+	push ax
+
+	;iffaux SINON3
 	pop ax
 	cmp ax,0
-	je SINON6
+	je SINON3
 
 	;iload -8
 	push word ptr [bp-8]
@@ -243,14 +233,10 @@ FSI3:
 	pop ax
 	mov word ptr [bp-8],ax
 
-	;goto FSI6
-	jmp FSI6
-SINON6:
-FSI6:
-	;goto FSI5
-	jmp FSI5
-SINON5:
-FSI5:
+	;goto FSI3
+	jmp FSI3
+SINON3:
+FSI3:
 	;iload -4
 	push word ptr [bp-4]
 
@@ -265,11 +251,6 @@ FSI5:
 	push -1
 	jmp $+4
 	push 0
-
-	;iffaux SINON7
-	pop ax
-	cmp ax,0
-	je SINON7
 
 	;iload -8
 	push word ptr [bp-8]
@@ -286,10 +267,16 @@ FSI5:
 	jmp $+4
 	push 0
 
-	;iffaux SINON8
+	;iand
+	pop bx
+	pop ax
+	and ax,bx
+	push ax
+
+	;iffaux SINON4
 	pop ax
 	cmp ax,0
-	je SINON8
+	je SINON4
 
 	;iload -8
 	push word ptr [bp-8]
@@ -313,14 +300,10 @@ FSI5:
 	pop ax
 	mov word ptr [bp-8],ax
 
-	;goto FSI8
-	jmp FSI8
-SINON8:
-FSI8:
-	;goto FSI7
-	jmp FSI7
-SINON7:
-FSI7:
+	;goto FSI4
+	jmp FSI4
+SINON4:
+FSI4:
 	;iload -2
 	push word ptr [bp-2]
 
@@ -483,8 +466,8 @@ mess2 DB "o$"
 	push dx
 	call ecrch
 
-	;iload -18
-	push word ptr [bp-18]
+	;iconst 65500
+	push word ptr 65500
 
 	;istore -10
 	pop ax
@@ -511,53 +494,6 @@ FAIRE4:
 	cmp ax,0
 	je FAIT4
 
-	;iload -18
-	push word ptr [bp-18]
-
-	;istore -12
-	pop ax
-	mov word ptr [bp-12],ax
-
-FAIRE5:
-	;iload -12
-	push word ptr [bp-12]
-
-	;iconst 0
-	push word ptr 0
-
-	;isup
-	pop bx
-	pop ax
-	cmp ax,bx
-	jle $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux FAIT5
-	pop ax
-	cmp ax,0
-	je FAIT5
-
-	;iload -12
-	push word ptr [bp-12]
-
-	;iconst 1
-	push word ptr 1
-
-	;isub
-	pop bx
-	pop ax
-	sub ax,bx
-	push ax
-
-	;istore -12
-	pop ax
-	mov word ptr [bp-12],ax
-
-	;goto FAIRE5
-	jmp FAIRE5
-FAIT5:
 	;iload -10
 	push word ptr [bp-10]
 

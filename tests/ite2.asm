@@ -124,13 +124,13 @@ mess1 DB "a$"
 	mov word ptr [bp-4],ax
 
 	;goto FAIRE2
-jmp FAIRE2
+	jmp FAIRE2
 FAIT2:
 	;aLaLigne
 	call ligsuiv
 
 	;goto FAIRE1
-jmp FAIRE1
+	jmp FAIRE1
 FAIT1:
 	;queue
 	nop

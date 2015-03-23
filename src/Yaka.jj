@@ -121,8 +121,34 @@ TOKEN : {
 void analyse() :{} {
 	<PROGRAMME> { yvm.entete(); }
 	<ident>
+	(declFonction())*
+	<PRINCIPAL>
 	bloc()
+	<FPRINCIPAL>
 	<FPROGRAMME> { yvm.queue(); }
+}
+
+void declFonction() :{} {
+	type()
+	<FONCTION>
+	<ident>
+	paramForms()
+	bloc()
+	<FFONCTION>
+}
+
+void paramForms() :{} {
+	"("
+	(
+	  	paramForm()
+	  	("," paramForm())*
+	)?
+	")"
+}
+
+void paramForm() :{} {
+	type()
+	<ident>
 }
 
 void bloc() :{} {
@@ -175,6 +201,7 @@ void instruction() :{} {
 |	condition()
 |	lecture()
 |	ecriture()
+|	retourne()
 }
 
 void affectation() :{} {
@@ -195,9 +222,9 @@ void condition() :{} {
 	<SI> { condition.si(); }
 	expression() { condition.verifierExpression(); }
 	<ALORS>
-	suiteInstr() { condition.igoto(); }
+	suiteInstr() { condition.igoto(); condition.sinon(); }
 	(
-	  	<SINON> { condition.sinon(); }
+	  	<SINON> 
 	  	suiteInstr()
 	)?
 	<FSI> { condition.fsi(); }
@@ -219,6 +246,11 @@ void ecriture() :{} {
 	)
 	")"
 |	<ALALIGNE> { entreeSortie.aLaLigne(); }
+}
+
+void retourne() :{} {
+	<RETOURNE>
+	expression()
 } 
 
 void expression() :{} {
@@ -250,10 +282,19 @@ void primaire() :{} {
 }
 
 void valeur() :{} {
-	<entier> { expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
-|	<ident> { expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
-|	<VRAI> { expression.ajoutType(eType.BOOLEEN, TRUE); }
-|	<FAUX> { expression.ajoutType(eType.BOOLEEN, FALSE); }
+	<entier> 						{ expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
+|	<ident> (argumentsFonction())* 	{ expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
+|	<VRAI> 							{ expression.ajoutType(eType.BOOLEEN, TRUE); }
+|	<FAUX> 							{ expression.ajoutType(eType.BOOLEEN, FALSE); }
+}
+
+void argumentsFonction() :{} {
+	"("
+	(
+	  	expression()
+	  	("," expression())*
+	)?
+	")"
 }
 
 void opRel() :{} {

@@ -1,5 +1,5 @@
-Turbo Assembler	 Version 4.1	    03/16/15 15:03:50	    Page 1
-cond.asm
+Turbo Assembler	 Version 4.1	    03/23/15 13:43:36	    Page 1
+cond.ASM
 
 
 
@@ -60,8 +60,8 @@ cond.asm
      55	    0037  58				 pop ax
      56	    0038  3B C3				 cmp ax,bx
      57	    003A  7E 04				 jle $+6
-Turbo Assembler	 Version 4.1	    03/16/15 15:03:50	    Page 2
-cond.asm
+Turbo Assembler	 Version 4.1	    03/23/15 13:43:36	    Page 2
+cond.ASM
 
 
 
