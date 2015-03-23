@@ -17,7 +17,7 @@ public class Expression implements Constante {
 	}
 	
 	public void ajoutTypeFromVar(String ident) {
-		if (!Yaka.tabIdent.existeIdent(ident)) {
+		if (!Yaka.tabIdent.existeIdentLocaux(ident)) {
 			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
 			this.types.push(eType.ERREUR);
 		}

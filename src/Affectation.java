@@ -3,7 +3,7 @@ public class Affectation implements Constante {
 	
 	
 	public void setIdentAffectation(String ident) {
-		if (!Yaka.tabIdent.existeIdent(ident)) {
+		if (!Yaka.tabIdent.existeIdentLocaux(ident)) {
 			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
 		}
 		else {
