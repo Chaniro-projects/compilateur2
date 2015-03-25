@@ -13,6 +13,7 @@ public class Yaka implements Constante {
 	public static EntreeSortie entreeSortie = new EntreeSortie();
 	public static Iteration iteration = new Iteration();
 	public static Condition condition = new Condition();
+	public static Fonction = fonction = new Fonction();
 	public static YVMasm yvm;
 
 	public static void main(String args[]) {
@@ -131,7 +132,7 @@ void analyse() :{} {
 void declFonction() :{} {
 	type()
 	<FONCTION>
-	<ident>
+	<ident> { fonction.setFonctionCourante(YakaTokenManager.identLu); }
 	paramForms()
 	bloc()
 	<FFONCTION>
@@ -186,8 +187,8 @@ void declVar() :{} {
 }
 
 void type() :{} {
-	<ENTIER> { declaration.setLastType(eType.ENTIER); }
-|	<BOOLEEN> { declaration.setLastType(eType.BOOLEEN); }
+	<ENTIER> { declaration.setLastType(eType.ENTIER); fonction.setFonctionCouranteType(eType.ENTIER); }
+|	<BOOLEEN> { declaration.setLastType(eType.BOOLEEN); fonction.setFonctionCouranteType(eType.BOOLEEN); }
 }
 
 void suiteInstr() :{} {
