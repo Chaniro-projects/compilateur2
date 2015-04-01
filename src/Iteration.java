@@ -4,6 +4,7 @@ public class Iteration implements Constante {
 	protected int nbIterations;
 	protected Stack<Integer> iterations;
 	
+	
 	public Iteration() {
 		this.nbIterations = 0;
 		this.iterations = new Stack<Integer>();
@@ -18,10 +19,12 @@ public class Iteration implements Constante {
 	public void verifierExpression() {
 		eType expressionType = Yaka.expression.type();
 		
-		if (expressionType == eType.BOOLEEN)
+		if (expressionType == eType.BOOLEEN) {
 			Yaka.yvm.iffaux("FAIT" + this.iterations.lastElement());
-		else
-			System.out.println("Erreur : une iteration attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
+		}
+		else {
+			System.out.println("Erreur : une itération attend une expression booléenne (ligne : " + Yaka.token.beginLine + ").");
+		}
 	}
 	
 	public void igoto() {

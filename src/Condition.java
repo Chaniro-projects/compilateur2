@@ -4,10 +4,12 @@ public class Condition implements Constante {
 	protected int nbConditions;
 	protected Stack<Integer> conditions;
 	
+	
 	public Condition() {
 		this.nbConditions = 0;
 		this.conditions = new Stack<Integer>();
 	}
+	
 	
 	public void si() {
 		this.conditions.push(++this.nbConditions);
@@ -16,10 +18,12 @@ public class Condition implements Constante {
 	public void verifierExpression() {
 		eType expressionType = Yaka.expression.type();
 		
-		if (expressionType == eType.BOOLEEN)
+		if (expressionType == eType.BOOLEEN) {
 			Yaka.yvm.iffaux("SINON" + this.conditions.lastElement());
-		else
-			System.out.println("Erreur : une condition attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
+		}
+		else {
+			System.out.println("Erreur : une condition attend une expression booléenne (ligne : " + Yaka.token.beginLine + ").");
+		}
 	}
 	
 	public void igoto() {

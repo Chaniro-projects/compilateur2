@@ -3,12 +3,15 @@ import java.io.*;
 
 public class Yaka implements Constante, YakaConstants {
         public static TabIdent tabIdent = new TabIdent();
+        public static MemorisationType memorisationType = new MemorisationType();
         public static Declaration declaration = new Declaration();
         public static Expression expression = new Expression();
         public static Affectation affectation = new Affectation();
         public static EntreeSortie entreeSortie = new EntreeSortie();
         public static Iteration iteration = new Iteration();
         public static Condition condition = new Condition();
+        public static Fonction fonction = new Fonction();
+        //public static YVM yvm;
         public static YVMasm yvm;
 
         public static void main(String args[]) {
@@ -19,6 +22,7 @@ public class Yaka implements Constante, YakaConstants {
                         System.out.print(args[args.length - 1] + ": ");
                         try {
                                 input = new FileInputStream(args[args.length-1] + ".yaka");
+                                //yvm = new YVM(args[args.length-1] + ".yvm");
                                 yvm = new YVMasm(args[args.length-1] + ".asm");
                         } catch (FileNotFoundException e) {
                                 System.out.println("Fichier introuvable.");
@@ -63,7 +67,9 @@ public class Yaka implements Constante, YakaConstants {
       }
       declFonction();
     }
+                                  fonction.debut();
     jj_consume_token(PRINCIPAL);
+                      fonction.setFonctionCourante("main", eType.ENTIER);
     bloc();
     jj_consume_token(FPRINCIPAL);
     jj_consume_token(FPROGRAMME);
@@ -71,12 +77,16 @@ public class Yaka implements Constante, YakaConstants {
   }
 
   static final public void declFonction() throws ParseException {
+                          fonction.debut();
     type();
     jj_consume_token(FONCTION);
     jj_consume_token(ident);
+                  fonction.setFonctionCourante(YakaTokenManager.identLu, Yaka.memorisationType.getType());
     paramForms();
+                       fonction.setOffsetParametresFonctionCourante();
     bloc();
     jj_consume_token(FFONCTION);
+                      fonction.fin();
   }
 
   static final public void paramForms() throws ParseException {
@@ -108,7 +118,9 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void paramForm() throws ParseException {
     type();
+                 fonction.addTypeParametreFonctionCourante(Yaka.memorisationType.getType());
     jj_consume_token(ident);
+                  fonction.addParametreFonctionCourante(YakaTokenManager.identLu, Yaka.memorisationType.getType());
   }
 
   static final public void bloc() throws ParseException {
@@ -136,7 +148,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       declVar();
     }
-                       yvm.ouvrePrinc(declaration.getVariable());
+                       yvm.ouvreBloc(declaration.getVariable());
     suiteInstr();
   }
 
@@ -161,7 +173,7 @@ public class Yaka implements Constante, YakaConstants {
 
   static final public void defConst() throws ParseException {
     jj_consume_token(ident);
-                  declaration.setLastIdent(YakaTokenManager.identLu);
+                  declaration.setIdentDeclaration(YakaTokenManager.identLu);
     jj_consume_token(44);
     valConst();
   }
@@ -195,7 +207,7 @@ public class Yaka implements Constante, YakaConstants {
     jj_consume_token(VAR);
     type();
     jj_consume_token(ident);
-                  declaration.createVar(YakaTokenManager.identLu);
+                  declaration.createVar(YakaTokenManager.identLu, Yaka.memorisationType.getType());
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -208,7 +220,7 @@ public class Yaka implements Constante, YakaConstants {
       }
       jj_consume_token(41);
       jj_consume_token(ident);
-                       declaration.createVar(YakaTokenManager.identLu);
+                       declaration.createVar(YakaTokenManager.identLu, Yaka.memorisationType.getType());
     }
     jj_consume_token(43);
   }
@@ -217,11 +229,11 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ENTIER:
       jj_consume_token(ENTIER);
-                   declaration.setLastType(eType.ENTIER);
+                   memorisationType.setType(eType.ENTIER);
       break;
     case BOOLEEN:
       jj_consume_token(BOOLEEN);
-                    declaration.setLastType(eType.BOOLEEN);
+                    memorisationType.setType(eType.BOOLEEN);
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -391,6 +403,7 @@ public class Yaka implements Constante, YakaConstants {
   static final public void retourne() throws ParseException {
     jj_consume_token(RETOURNE);
     expression();
+                       fonction.retourne();
   }
 
   static final public void expression() throws ParseException {
@@ -498,31 +511,28 @@ public class Yaka implements Constante, YakaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case entier:
       jj_consume_token(entier);
-                                                                  expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu);
+                   expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu);
       break;
     case ident:
       jj_consume_token(ident);
-      label_10:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 40:
-          ;
-          break;
-        default:
-          jj_la1[21] = jj_gen;
-          break label_10;
-        }
+                  expression.ajoutTypeFromVar(YakaTokenManager.identLu);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case 40:
         argumentsFonction();
+                               fonction.finAppelFonction();
+        break;
+      default:
+        jj_la1[21] = jj_gen;
+        ;
       }
-                                          expression.ajoutTypeFromVar(YakaTokenManager.identLu);
       break;
     case VRAI:
       jj_consume_token(VRAI);
-                                                                  expression.ajoutType(eType.BOOLEEN, TRUE);
+                 expression.ajoutType(eType.BOOLEEN, TRUE);
       break;
     case FAUX:
       jj_consume_token(FAUX);
-                                                                  expression.ajoutType(eType.BOOLEEN, FALSE);
+                 expression.ajoutType(eType.BOOLEEN, FALSE);
       break;
     default:
       jj_la1[22] = jj_gen;
@@ -542,7 +552,8 @@ public class Yaka implements Constante, YakaConstants {
     case 40:
     case 51:
       expression();
-      label_11:
+                               fonction.verifierParametre();
+      label_10:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case 41:
@@ -550,10 +561,11 @@ public class Yaka implements Constante, YakaConstants {
           break;
         default:
           jj_la1[23] = jj_gen;
-          break label_11;
+          break label_10;
         }
         jj_consume_token(41);
         expression();
+                                    fonction.verifierParametre();
       }
       break;
     default:

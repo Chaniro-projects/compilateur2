@@ -1,25 +1,23 @@
 import java.util.Stack;
 
 public class IdFonct extends Ident {
-	private Stack<eType> arguments;
+	private Stack<eType> typeParametres;
 	
 	
 	public IdFonct(String nom, eType type) {
 		super(nom, type);
-		this.arguments = new Stack<eType>();
+		this.typeParametres = new Stack<eType>();
 	}
 	
-	
-	public Stack<eType> getArguments() {
-		return this.arguments;
+	public Stack<eType> getTypeParametres() {
+		return this.typeParametres;
 	}
 	
-	
-	public void addArguments(eType argument) {
-		this.arguments.push(argument);
+	public void addTypeParametre(eType type) {
+		this.typeParametres.push(type);
 	}
 	
-	public int nbArguments() {
-		return this.arguments.size();
+	public int nbParametres() {
+		return this.typeParametres.size();
 	}
 }

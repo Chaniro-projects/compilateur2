@@ -7,13 +7,15 @@ import java.io.*;
 
 public class Yaka implements Constante {
 	public static TabIdent tabIdent = new TabIdent();
+	public static MemorisationType memorisationType = new MemorisationType();
 	public static Declaration declaration = new Declaration();
 	public static Expression expression = new Expression();
 	public static Affectation affectation = new Affectation();
 	public static EntreeSortie entreeSortie = new EntreeSortie();
 	public static Iteration iteration = new Iteration();
 	public static Condition condition = new Condition();
-	public static Fonction = fonction = new Fonction();
+	public static Fonction fonction = new Fonction();
+	//public static YVM yvm;
 	public static YVMasm yvm;
 
 	public static void main(String args[]) {
@@ -24,6 +26,7 @@ public class Yaka implements Constante {
 			System.out.print(args[args.length - 1] + ": ");
 			try {
 				input = new FileInputStream(args[args.length-1] + ".yaka");
+				//yvm = new YVM(args[args.length-1] + ".yvm");
 				yvm = new YVMasm(args[args.length-1] + ".asm");
 			} catch (FileNotFoundException e) {
 				System.out.println("Fichier introuvable.");
@@ -123,38 +126,40 @@ void analyse() :{} {
 	<PROGRAMME> { yvm.entete(); }
 	<ident>
 	(declFonction())*
-	<PRINCIPAL>
+				{ fonction.debut(); }
+	<PRINCIPAL> { fonction.setFonctionCourante("main", eType.ENTIER); }
 	bloc()
 	<FPRINCIPAL>
 	<FPROGRAMME> { yvm.queue(); }
 }
 
 void declFonction() :{} {
+  			{ fonction.debut(); }
 	type()
 	<FONCTION>
-	<ident> { fonction.setFonctionCourante(YakaTokenManager.identLu); }
-	paramForms()
+	<ident> { fonction.setFonctionCourante(YakaTokenManager.identLu, Yaka.memorisationType.getType()); }
+	paramForms() { fonction.setOffsetParametresFonctionCourante(); }
 	bloc()
-	<FFONCTION>
+	<FFONCTION> { fonction.fin(); }
 }
 
 void paramForms() :{} {
 	"("
 	(
-	  	paramForm()
-	  	("," paramForm())*
+		paramForm()
+		("," paramForm())*
 	)?
 	")"
 }
 
 void paramForm() :{} {
-	type()
-	<ident>
+	type() { fonction.addTypeParametreFonctionCourante(Yaka.memorisationType.getType()); }
+	<ident> { fonction.addParametreFonctionCourante(YakaTokenManager.identLu, Yaka.memorisationType.getType()); }
 }
 
 void bloc() :{} {
 	(declConst())*
-	(declVar())* { yvm.ouvrePrinc(declaration.getVariable()); }
+	(declVar())* { yvm.ouvreBloc(declaration.getVariable()); }
 	suiteInstr()
 }
 
@@ -166,7 +171,7 @@ void declConst() :{} {
 }
 
 void defConst() :{} {
-	<ident> { declaration.setLastIdent(YakaTokenManager.identLu); }
+	<ident> { declaration.setIdentDeclaration(YakaTokenManager.identLu); }
 	"="
 	valConst()
 }
@@ -181,14 +186,14 @@ void valConst() :{} {
 void declVar() :{} {
 	<VAR>
 	type()
-	<ident> { declaration.createVar(YakaTokenManager.identLu); }
-	("," <ident> { declaration.createVar(YakaTokenManager.identLu); })*
+	<ident> { declaration.createVar(YakaTokenManager.identLu, Yaka.memorisationType.getType()); }
+	("," <ident> { declaration.createVar(YakaTokenManager.identLu, Yaka.memorisationType.getType()); })*
 	";"
 }
 
 void type() :{} {
-	<ENTIER> { declaration.setLastType(eType.ENTIER); fonction.setFonctionCouranteType(eType.ENTIER); }
-|	<BOOLEEN> { declaration.setLastType(eType.BOOLEEN); fonction.setFonctionCouranteType(eType.BOOLEEN); }
+	<ENTIER> { memorisationType.setType(eType.ENTIER); }
+|	<BOOLEEN> { memorisationType.setType(eType.BOOLEEN); }
 }
 
 void suiteInstr() :{} {
@@ -206,7 +211,7 @@ void instruction() :{} {
 }
 
 void affectation() :{} {
-	<ident> { affectation.setIdentAffectation(YakaTokenManager.identLu); } 
+	<ident> { affectation.setIdentAffectation(YakaTokenManager.identLu); }
 	"="
 	expression() { affectation.affectation(); }
 }
@@ -224,10 +229,7 @@ void condition() :{} {
 	expression() { condition.verifierExpression(); }
 	<ALORS>
 	suiteInstr() { condition.igoto(); condition.sinon(); }
-	(
-	  	<SINON> 
-	  	suiteInstr()
-	)?
+	(<SINON> suiteInstr())?
 	<FSI> { condition.fsi(); }
 }
 
@@ -242,7 +244,7 @@ void ecriture() :{} {
 	<ECRIRE>
 	"("
 	(
-	  	expression() { entreeSortie.ecrire(); }
+		expression() { entreeSortie.ecrire(); }
 	  |	<chaine> { entreeSortie.ecrire(YakaTokenManager.chaineLue); }
 	)
 	")"
@@ -251,7 +253,7 @@ void ecriture() :{} {
 
 void retourne() :{} {
 	<RETOURNE>
-	expression()
+	expression() { fonction.retourne(); }
 } 
 
 void expression() :{} {
@@ -283,17 +285,18 @@ void primaire() :{} {
 }
 
 void valeur() :{} {
-	<entier> 						{ expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
-|	<ident> (argumentsFonction())* 	{ expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
-|	<VRAI> 							{ expression.ajoutType(eType.BOOLEEN, TRUE); }
-|	<FAUX> 							{ expression.ajoutType(eType.BOOLEEN, FALSE); }
+	<entier> { expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
+|	<ident> { expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
+	(argumentsFonction() { fonction.finAppelFonction();})? 	
+|	<VRAI> { expression.ajoutType(eType.BOOLEEN, TRUE); }
+|	<FAUX> { expression.ajoutType(eType.BOOLEEN, FALSE); }
 }
 
 void argumentsFonction() :{} {
 	"("
 	(
-	  	expression()
-	  	("," expression())*
+		expression() { fonction.verifierParametre(); }
+		("," expression() { fonction.verifierParametre(); })*
 	)?
 	")"
 }

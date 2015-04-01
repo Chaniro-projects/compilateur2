@@ -16,13 +16,20 @@ public class Expression implements Constante {
 		Yaka.yvm.iconst(v);
 	}
 	
+	public void ajoutType(eType type) {
+		this.types.push(type);
+	}
+	
 	public void ajoutTypeFromVar(String ident) {
-		if (!Yaka.tabIdent.existeIdentLocaux(ident)) {
+		if (Yaka.tabIdent.existeGlobaux(ident)) {
+			Yaka.fonction.debutAppelFonction(ident);
+		}
+		else if (!Yaka.tabIdent.existeLocaux(ident)) {
 			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
 			this.types.push(eType.ERREUR);
 		}
 		else {
-			Ident id = Yaka.tabIdent.chercheIdent(ident);
+			Ident id = Yaka.tabIdent.chercheLocaux(ident);
 			this.types.push(id.getType());
 			
 			if(id instanceof IdConst) {
@@ -39,8 +46,8 @@ public class Expression implements Constante {
 	}
 	
 	public void evaluation() {
-		eType type1 = types.pop();
-		eOperande op = operateurs.pop();
+		eType type1 = this.types.pop();
+		eOperande op = this.operateurs.pop();
 		
 		if (op == eOperande.NEG) {
 			if (controleOperateur(op, type1)) Yaka.yvm.ineg();
@@ -50,18 +57,18 @@ public class Expression implements Constante {
 		}
 		else
 		{
-			eType type2 = types.pop();
+			eType type2 = this.types.pop();
 			if (type1 != type2) {
-				types.push(eType.ERREUR);
+				this.types.push(eType.ERREUR);
 			}
 			else {
 				switch (op) {
-					case ADD: if (controleOperateur(op, type1)) Yaka.yvm.iadd();	break;
+					case ADD: if (controleOperateur(op, type1)) Yaka.yvm.iadd(); break;
 					case SUB: if (controleOperateur(op, type1)) Yaka.yvm.isub(); break;
-					case MUL: if (controleOperateur(op, type1)) Yaka.yvm.imul();	break;
+					case MUL: if (controleOperateur(op, type1)) Yaka.yvm.imul(); break;
 					case DIV: if (controleOperateur(op, type1)) Yaka.yvm.idiv(); break;
-					case INF: if (controleOperateur(op, type1)) Yaka.yvm.iinf();	break;
-					case INFEGAL: if (controleOperateur(op, type1)) Yaka.yvm.iinfegal();	break;
+					case INF: if (controleOperateur(op, type1)) Yaka.yvm.iinf(); break;
+					case INFEGAL: if (controleOperateur(op, type1)) Yaka.yvm.iinfegal(); break;
 					case SUP: if (controleOperateur(op, type1)) Yaka.yvm.isup(); break;
 					case SUPEGAL: if (controleOperateur(op, type1)) Yaka.yvm.isupegal(); break;
 					case EGAL: if (controleOperateur(op, type1)) Yaka.yvm.iegal(); break;
@@ -81,11 +88,11 @@ public class Expression implements Constante {
 			case MUL:
 			case DIV:
 				if (type == eType.ENTIER) {
-					types.push(eType.ENTIER);
+					this.types.push(eType.ENTIER);
 					return true;
 				}
 				else if (type == eType.BOOLEEN) {
-					types.push(eType.ERREUR);
+					this.types.push(eType.ERREUR);
 					System.out.println("Erreur : problème de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
@@ -95,10 +102,10 @@ public class Expression implements Constante {
 			case SUP:
 			case SUPEGAL:
 				if (type == eType.ENTIER) {
-					types.push(eType.BOOLEEN);
+					this.types.push(eType.BOOLEEN);
 					return true;
 				} else if (type == eType.BOOLEEN) {
-					types.push(eType.ERREUR);
+					this.types.push(eType.ERREUR);
 					System.out.println("Erreur : problème de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
@@ -106,11 +113,11 @@ public class Expression implements Constante {
 			case EGAL:
 			case DIFF:
 				if (type == eType.ENTIER) {
-					types.push(eType.BOOLEEN);
+					this.types.push(eType.BOOLEEN);
 					return true;
 				}
 				else if (type == eType.BOOLEEN) {
-					types.push(eType.BOOLEEN);
+					this.types.push(eType.BOOLEEN);
 					return true;
 				}
 				break;
@@ -118,31 +125,31 @@ public class Expression implements Constante {
 			case OR:
 				if (type == eType.ENTIER) {
 					System.out.println("Erreur : problème de type (ligne : " + Yaka.token.beginLine + ").");
-					types.push(eType.ERREUR);
+					this.types.push(eType.ERREUR);
 					return false;
 				}
 				else if (type == eType.BOOLEEN) {
-					types.push(eType.BOOLEEN);
+					this.types.push(eType.BOOLEEN);
 					return true;
 				}
 				break;
 			case NOT:
 				if(type == eType.BOOLEEN) {
-					types.push(eType.BOOLEEN);
+					this.types.push(eType.BOOLEEN);
 					return true;
 				}
 				else {
-					types.push(eType.ERREUR);
+					this.types.push(eType.ERREUR);
 					System.out.println("Erreur : problème de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
 			case NEG:
 				if(type == eType.ENTIER) {
-					types.push(eType.ENTIER);
+					this.types.push(eType.ENTIER);
 					return true;
 				}
 				else {
-					types.push(eType.ERREUR);
+					this.types.push(eType.ERREUR);
 					System.out.println("Erreur : problème de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
@@ -153,5 +160,9 @@ public class Expression implements Constante {
 	
 	public eType type() {
 		return this.types.pop();
+	}
+	
+	public eType getType() {
+		return this.types.lastElement();
 	}
 }

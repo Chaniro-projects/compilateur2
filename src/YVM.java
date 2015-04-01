@@ -12,120 +12,141 @@ public class YVM implements Constante {
 		this.fo = Ecriture.ouvrir(nom);
 	}
 	
+	
 	public void fermer() {
-		Ecriture.fermer(fo);
+		Ecriture.fermer(this.fo);
 	}
 	
 	
 	public void iadd() {
-		Ecriture.ecrireStringln(fo, "iadd");
+		Ecriture.ecrireStringln(this.fo, "iadd");
 	}
 	
 	public void isub() {
-		Ecriture.ecrireStringln(fo, "isub");
+		Ecriture.ecrireStringln(this.fo, "isub");
 	}
 	
 	public void imul() {
-		Ecriture.ecrireStringln(fo, "imul");
+		Ecriture.ecrireStringln(this.fo, "imul");
 	}
 	
 	public void idiv() {
-		Ecriture.ecrireStringln(fo, "idiv");
+		Ecriture.ecrireStringln(this.fo, "idiv");
 	}
 	
 	public void inot() {
-		Ecriture.ecrireStringln(fo, "inot");
+		Ecriture.ecrireStringln(this.fo, "inot");
 	}
 	
 	public void ineg() {
-		Ecriture.ecrireStringln(fo, "ineg");
+		Ecriture.ecrireStringln(this.fo, "ineg");
 	}
 	
 	public void ior() {
-		Ecriture.ecrireStringln(fo, "ior");
+		Ecriture.ecrireStringln(this.fo, "ior");
 	}
 	
 	public void iand() {
-		Ecriture.ecrireStringln(fo, "iand");
+		Ecriture.ecrireStringln(this.fo, "iand");
 	}
 	
 	public void iinf() {
-		Ecriture.ecrireStringln(fo, "iinf");
+		Ecriture.ecrireStringln(this.fo, "iinf");
 	}
 	
 	public void isup() {
-		Ecriture.ecrireStringln(fo, "isup");
+		Ecriture.ecrireStringln(this.fo, "isup");
 	}
 	
 	public void iinfegal() {
-		Ecriture.ecrireStringln(fo, "iinfegal");
+		Ecriture.ecrireStringln(this.fo, "iinfegal");
 	}
 	
 	public void isupegal() {
-		Ecriture.ecrireStringln(fo, "isupegal");
+		Ecriture.ecrireStringln(this.fo, "isupegal");
 	}
 	
 	public void iegal() {
-		Ecriture.ecrireStringln(fo, "iegal");
+		Ecriture.ecrireStringln(this.fo, "iegal");
 	}
 	
 	public void idiff() {
-		Ecriture.ecrireStringln(fo, "idiff");
+		Ecriture.ecrireStringln(this.fo, "idiff");
 	}
 	
 	public void iload(int offset) {
-		Ecriture.ecrireStringln(fo, "iload " + offset);
+		Ecriture.ecrireStringln(this.fo, "iload " + offset);
 	}
 	
 	public void istore(int offset) {
-		Ecriture.ecrireStringln(fo, "istore " + offset);
+		Ecriture.ecrireStringln(this.fo, "istore " + offset);
 	}
 	
 	public void iconst(int valeur) {
-		Ecriture.ecrireStringln(fo, "iconst " + valeur);
+		Ecriture.ecrireStringln(this.fo, "iconst " + valeur);
 	}
 	
 	public void entete() {
-		Ecriture.ecrireStringln(fo, "entete");
+		Ecriture.ecrireStringln(this.fo, "entete");
 	}
 	
 	public void ouvrePrinc(int variable) {
-		Ecriture.ecrireStringln(fo, "ouvrePrinc " + variable);
+		Ecriture.ecrireStringln(this.fo, "ouvrePrinc " + variable);
 	}
 	
 	public void queue() {
-		Ecriture.ecrireStringln(fo, "queue");
+		Ecriture.ecrireStringln(this.fo, "queue");
 	}
 	
 	public void aLaLigne() {
-		Ecriture.ecrireStringln(fo, "aLaLigne");
+		Ecriture.ecrireStringln(this.fo, "aLaLigne");
 	}
 	
 	public void ecrireEnt() {
-		Ecriture.ecrireStringln(fo, "ecrireEnt");
+		Ecriture.ecrireStringln(this.fo, "ecrireEnt");
 	}
 	
 	public void lireEnt(int offset) {
-		Ecriture.ecrireStringln(fo, "lireEnt " + offset);
+		Ecriture.ecrireStringln(this.fo, "lireEnt " + offset);
 	}
 	
 	public void ecrireChaine(String chaine) {
-		Ecriture.ecrireStringln(fo, "ecrireChaine " + chaine);
+		Ecriture.ecrireStringln(this.fo, "ecrireChaine " + chaine);
 	}
 	
 	public void ecrireBool() {
-		Ecriture.ecrireStringln(fo, "ecrireBool");
+		Ecriture.ecrireStringln(this.fo, "ecrireBool");
 	}
 	
 	public void etiquette(String etiquette) {
-		Ecriture.ecrireStringln(fo, etiquette + ":");
+		Ecriture.ecrireStringln(this.fo, etiquette + ":");
 	}
 	
 	public void iffaux(String etiquette) {
-		Ecriture.ecrireStringln(fo, "iffaux " + etiquette);
+		Ecriture.ecrireStringln(this.fo, "iffaux " + etiquette);
 	}
 	
 	public void igoto(String etiquette) {
-		Ecriture.ecrireStringln(fo, "goto " + etiquette);
+		Ecriture.ecrireStringln(this.fo, "goto " + etiquette);
+	}
+	
+	public void ouvreBloc(int variable) {
+		Ecriture.ecrireStringln(this.fo, "ouvbloc " + variable);
+	}
+	
+	public void fermeBloc(int variable) {
+		Ecriture.ecrireStringln(this.fo, "fermebloc " + variable);
+	}
+	
+	public void ireturn(int offset) {
+		Ecriture.ecrireStringln(this.fo, "ireturn " + offset);
+	}
+	
+	public void reserveRetour() {
+		Ecriture.ecrireStringln(this.fo, "reserveRetour");
+	}
+	
+	public void call(String etiquette) {
+		Ecriture.ecrireStringln(this.fo, "call " + etiquette);
 	}
 }

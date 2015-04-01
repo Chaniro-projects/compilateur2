@@ -1,6 +1,6 @@
 public class EntreeSortie implements Constante {
 	public void lire(String ident) {
-		Ident id = Yaka.tabIdent.chercheIdent(ident);
+		Ident id = Yaka.tabIdent.chercheLocaux(ident);
 		
 		if(id instanceof IdConst) {
 			// Erreur ?

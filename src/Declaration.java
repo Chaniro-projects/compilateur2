@@ -1,34 +1,39 @@
 public class Declaration implements Constante {
-	private String lastIdent;
-	private eType lastType;
+	private String identDeclaration;
 	private int offset;
 	
+	
 	public Declaration() {
-		this.offset = 0;
+		this.effacer();
+	}
+	
+	
+	public void setIdentDeclaration(String identDeclaration) {
+		this.identDeclaration = identDeclaration;
 	}
 	
 	public void createConstInt(int v) {
-		if (Yaka.tabIdent.existeIdentLocaux(this.lastIdent)) {
-			System.out.println("Erreur : l'ident '" + this.lastIdent + "' existe déjà (ligne : " + Yaka.token.beginLine + ").");
+		if (Yaka.tabIdent.existeLocaux(this.identDeclaration)) {
+			System.out.println("Erreur : l'ident '" + this.identDeclaration + "' existe déjà (ligne : " + Yaka.token.beginLine + ").");
 		}
 		
-		Yaka.tabIdent.rangeIdentLocaux(this.lastIdent, new IdConst(this.lastIdent, eType.ENTIER, v));
+		Yaka.tabIdent.rangeLocaux(this.identDeclaration, new IdConst(this.identDeclaration, eType.ENTIER, v));
 	}
 	
 	public void createConstBool(int b) {
-		if (Yaka.tabIdent.existeIdentLocaux(this.lastIdent)) {
-			System.out.println("Erreur : l'ident '" + this.lastIdent + "' existe déjà (ligne : " + Yaka.token.beginLine + ").");
+		if (Yaka.tabIdent.existeLocaux(this.identDeclaration)) {
+			System.out.println("Erreur : l'ident '" + this.identDeclaration + "' existe déjà (ligne : " + Yaka.token.beginLine + ").");
 		}
 		
-		Yaka.tabIdent.rangeIdentLocaux(this.lastIdent, new IdConst(this.lastIdent, eType.BOOLEEN, b));
+		Yaka.tabIdent.rangeLocaux(this.identDeclaration, new IdConst(this.identDeclaration, eType.BOOLEEN, b));
 	}
 	
 	public void createConstIdent(String ident) {
-		if(!Yaka.tabIdent.existeIdentLocaux(ident)) {
+		if(!Yaka.tabIdent.existeLocaux(ident)) {
 			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
 		}
 		else {
-			IdConst id = (IdConst) Yaka.tabIdent.chercheIdent(ident);
+			IdConst id = (IdConst) Yaka.tabIdent.chercheLocaux(ident);
 			if (id.getType() == Constante.eType.BOOLEEN) {
 				createConstBool(id.getValeur());
 			}
@@ -38,24 +43,20 @@ public class Declaration implements Constante {
 		}
 	}
 	
-	public void createVar(String name) {
-		if (Yaka.tabIdent.existeIdentLocaux(name)) {
-			System.out.println("Erreur: l'ident '" + name + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+	public void createVar(String ident, eType type) {
+		if (Yaka.tabIdent.existeLocaux(ident) || Yaka.tabIdent.existeGlobaux(ident)) {
+			System.out.println("Erreur: l'ident '" + ident + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
 		}
 		
 		this.offset -= 2;
-		Yaka.tabIdent.rangeIdentLocaux(name, new IdVar(name, this.lastType, this.offset));
-	}
-	
-	public void setLastIdent(String lastIdent) {
-		this.lastIdent = lastIdent;
-	}
-	
-	public void setLastType(eType lastType) {
-		this.lastType = lastType;
+		Yaka.tabIdent.rangeLocaux(ident, new IdVar(ident, type, this.offset));
 	}
 	
 	public int getVariable() {
 		return Math.abs(this.offset);
+	}
+	
+	public void effacer() {
+		this.offset = 0;
 	}
 }
