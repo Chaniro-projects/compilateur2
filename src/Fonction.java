@@ -63,6 +63,15 @@ public class Fonction implements Constante {
 		Yaka.yvm.reserveRetour();
 	}
 	
+	public void debutAppelFonctionErreur(String ident) {
+		IdFonct id = new IdFonct(ident, eType.ERREUR);
+		
+		this.fonctionsAppelees.push(id);
+		this.fonctionsAppeleesParametres.push(new Stack<eType>());
+		
+		Yaka.yvm.reserveRetour();
+	}
+	
 	public void verifierParametre() {
 		eType expressionType = Yaka.expression.getType();
 		this.fonctionsAppeleesParametres.lastElement().push(expressionType);

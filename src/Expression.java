@@ -21,7 +21,7 @@ public class Expression implements Constante {
 	}
 	
 	public void ajoutTypeFromVar(String ident) {
-		if (Yaka.tabIdent.existeGlobaux(ident)) {
+		/*if (Yaka.tabIdent.existeGlobaux(ident)) {
 			Yaka.fonction.debutAppelFonction(ident);
 		}
 		else if (!Yaka.tabIdent.existeLocaux(ident)) {
@@ -38,6 +38,32 @@ public class Expression implements Constante {
 			else if(id instanceof IdVar) {
 				Yaka.yvm.iload(((IdVar) id).getOffset());
 			}
+		}*/
+		if (Yaka.tabIdent.existeLocaux(ident)) {
+			Ident id = Yaka.tabIdent.chercheLocaux(ident);
+			this.types.push(id.getType());
+			
+			if(id instanceof IdConst) {
+				Yaka.yvm.iconst(((IdConst) id).getValeur());
+			}
+			else if(id instanceof IdVar) {
+				Yaka.yvm.iload(((IdVar) id).getOffset());
+			}
+		}
+		else if (!Yaka.tabIdent.existeGlobaux(ident)) {
+			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
+			this.types.push(eType.ERREUR);
+		}
+	}
+	
+	public void ajoutTypeFromFonction(String ident) {
+		if (Yaka.tabIdent.existeGlobaux(ident)) {
+			Yaka.fonction.debutAppelFonction(ident);
+		}
+		else {
+			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
+			this.types.push(eType.ERREUR);
+			Yaka.fonction.debutAppelFonctionErreur(ident);
 		}
 	}
 	

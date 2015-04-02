@@ -518,8 +518,9 @@ public class Yaka implements Constante, YakaConstants {
                   expression.ajoutTypeFromVar(YakaTokenManager.identLu);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 40:
+           expression.ajoutTypeFromFonction(YakaTokenManager.identLu);
         argumentsFonction();
-                               fonction.finAppelFonction();
+                                                                                               fonction.finAppelFonction();
         break;
       default:
         jj_la1[21] = jj_gen;
