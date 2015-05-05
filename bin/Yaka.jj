@@ -287,7 +287,7 @@ void primaire() :{} {
 void valeur() :{} {
 	<entier> { expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
 |	<ident> { expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
-	(argumentsFonction() { fonction.finAppelFonction();})? 	
+	({ expression.ajoutTypeFromFonction(YakaTokenManager.identLu); } argumentsFonction() { fonction.finAppelFonction();})? 	
 |	<VRAI> { expression.ajoutType(eType.BOOLEEN, TRUE); }
 |	<FAUX> { expression.ajoutType(eType.BOOLEEN, FALSE); }
 }

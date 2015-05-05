@@ -14,10 +14,10 @@ public class Declaration implements Constante {
 	
 	public void createConstInt(int v) {
 		if (Yaka.tabIdent.existeGlobaux(this.identDeclaration)) {
-			System.out.println("Erreur: une fonction portant le nom '" + this.identDeclaration + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : une fonction portant le nom '" + this.identDeclaration + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		else if (Yaka.tabIdent.existeLocaux(this.identDeclaration)) {
-			System.out.println("Erreur: l'ident '" + this.identDeclaration + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : l'ident '" + this.identDeclaration + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		
 		Yaka.tabIdent.rangeLocaux(this.identDeclaration, new IdConst(this.identDeclaration, eType.ENTIER, v));
@@ -25,10 +25,10 @@ public class Declaration implements Constante {
 	
 	public void createConstBool(int b) {
 		if (Yaka.tabIdent.existeGlobaux(this.identDeclaration)) {
-			System.out.println("Erreur: une fonction portant le nom '" + this.identDeclaration + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : une fonction portant le nom '" + this.identDeclaration + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		else if (Yaka.tabIdent.existeLocaux(this.identDeclaration)) {
-			System.out.println("Erreur: l'ident '" + this.identDeclaration + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : l'ident '" + this.identDeclaration + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		
 		Yaka.tabIdent.rangeLocaux(this.identDeclaration, new IdConst(this.identDeclaration, eType.BOOLEEN, b));
@@ -36,7 +36,7 @@ public class Declaration implements Constante {
 	
 	public void createConstIdent(String ident) {
 		if(!Yaka.tabIdent.existeLocaux(ident)) {
-			System.out.println("Erreur: l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : l'ident '" + ident + "' n'existe pas (ligne : " + Yaka.token.beginLine + ").");
 		}
 		else {
 			IdConst id = (IdConst) Yaka.tabIdent.chercheLocaux(ident);
@@ -51,10 +51,10 @@ public class Declaration implements Constante {
 	
 	public void createVar(String ident, eType type) {
 		if (Yaka.tabIdent.existeGlobaux(ident)) {
-			System.out.println("Erreur: une fonction portant le nom '" + ident + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : une fonction portant le nom '" + ident + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		else if (Yaka.tabIdent.existeLocaux(ident)) {
-			System.out.println("Erreur: l'ident '" + ident + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : l'ident '" + ident + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		
 		this.offset -= 2;

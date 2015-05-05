@@ -17,7 +17,7 @@ public class Fonction implements Constante {
 	
 	public void setFonctionCourante(String ident, eType type) {
 		if (Yaka.tabIdent.existeGlobaux(ident)) {
-			System.out.println("Erreur: la fonction '" + ident + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : la fonction '" + ident + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		
 		this.fonctionCourante = new IdFonct(ident, type);
@@ -30,8 +30,11 @@ public class Fonction implements Constante {
 	}
 	
 	public void addParametreFonctionCourante(String ident, eType type){
-		if (Yaka.tabIdent.existeLocaux(ident)) {
-			System.out.println("Erreur: l'ident '" + ident + "' existe deja (ligne:" + Yaka.token.beginLine + ").");
+		if (Yaka.tabIdent.existeGlobaux(ident)) {
+			System.out.println("Erreur : une fonction portant le nom '" + ident + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
+		}
+		else if (Yaka.tabIdent.existeLocaux(ident)) {
+			System.out.println("Erreur : l'ident '" + ident + "' existe deja (ligne :" + Yaka.token.beginLine + ").");
 		}
 		
 		Yaka.tabIdent.rangeLocaux(ident, new IdVar(ident, type, this.fonctionCourante.nbParametres()));
@@ -95,7 +98,7 @@ public class Fonction implements Constante {
 		else {
 			System.out.println("Erreur : le nombre d'arguments lors de l'appel de la fonction ne correspond pas (ligne : " + Yaka.token.beginLine + ").");
 		}
-				
+		
 		// On dépile les paramètres
 		for (int i = 0 ; i < nbParametres ; i++) {
 			Yaka.expression.type();
