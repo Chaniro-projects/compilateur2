@@ -68,6 +68,7 @@ public class Expression implements Constante {
 			eType type2 = this.types.pop();
 			if (type1 != type2) {
 				this.types.push(eType.ERREUR);
+				System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 			}
 			else {
 				switch (op) {
@@ -101,7 +102,7 @@ public class Expression implements Constante {
 				}
 				else if (type == eType.BOOLEEN) {
 					this.types.push(eType.ERREUR);
-					System.out.println("Erreur : problËme de type (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
 				break;
@@ -114,7 +115,7 @@ public class Expression implements Constante {
 					return true;
 				} else if (type == eType.BOOLEEN) {
 					this.types.push(eType.ERREUR);
-					System.out.println("Erreur : problËme de type (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
 				break;
@@ -132,7 +133,7 @@ public class Expression implements Constante {
 			case AND:
 			case OR:
 				if (type == eType.ENTIER) {
-					System.out.println("Erreur : problËme de type (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 					this.types.push(eType.ERREUR);
 					return false;
 				}
@@ -148,7 +149,7 @@ public class Expression implements Constante {
 				}
 				else {
 					this.types.push(eType.ERREUR);
-					System.out.println("Erreur : problËme de type (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
 			case NEG:
@@ -158,7 +159,7 @@ public class Expression implements Constante {
 				}
 				else {
 					this.types.push(eType.ERREUR);
-					System.out.println("Erreur : problËme de type (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probl√®me de type (ligne : " + Yaka.token.beginLine + ").");
 					return false;
 				}
 		}
