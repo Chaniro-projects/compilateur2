@@ -46,7 +46,7 @@ public class Yaka implements Constante {
 			analyseur = new Yaka(input);
 			analyseur.analyse();
 			yvm.fermer();
-			System.out.println("Analyse syntaxique réussie !");
+			System.out.println("Analyse syntaxique rÃ©ussie !");
 		} catch (ParseException e) {
 			String message = e.getMessage();
 			message = message.substring(0, message.indexOf("\n"));
@@ -127,7 +127,7 @@ void analyse() :{} {
 	<ident>
 	(declFonction())*
 				{ fonction.debut(); }
-	<PRINCIPAL> { fonction.setFonctionCourante("main", eType.ENTIER); }
+	<PRINCIPAL> { fonction.setFonctionCourante("main", eType.ERREUR); }
 	bloc()
 	<FPRINCIPAL>
 	<FPROGRAMME> { yvm.queue(); }
