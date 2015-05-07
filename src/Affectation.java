@@ -10,7 +10,7 @@ public class Affectation implements Constante {
 			Ident id = Yaka.tabIdent.chercheLocaux(ident);
 			
 			if(id instanceof IdConst) {
-				System.out.println("Erreur: l'ident '" + ident + "' est une constante (ligne : " + Yaka.token.beginLine + ").");
+				System.out.println("Erreur: l'ident '" + ident + "' est une constante alors qu'on attend une variable (ligne : " + Yaka.token.beginLine + ").");
 			}
 			else if(id instanceof IdVar) {
 				this.identAffectation = (IdVar) id;
@@ -26,7 +26,7 @@ public class Affectation implements Constante {
 				Yaka.yvm.istore(((IdVar) this.identAffectation).getOffset());
 			}
 			else {
-				System.out.println("Erreur : problème de type lors de l'affectation (ligne : " + Yaka.token.beginLine + ").");
+				System.out.println("Erreur : problÃ¨me de type lors de l'affectation (ligne : " + Yaka.token.beginLine + ").");
 			}
 		}
 	}
