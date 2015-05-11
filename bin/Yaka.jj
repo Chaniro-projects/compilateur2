@@ -46,7 +46,7 @@ public class Yaka implements Constante {
 			analyseur = new Yaka(input);
 			analyseur.analyse();
 			yvm.fermer();
-			System.out.println("Analyse syntaxique réussie !");
+			System.out.println("Analyse syntaxique reussie !");
 		} catch (ParseException e) {
 			String message = e.getMessage();
 			message = message.substring(0, message.indexOf("\n"));
@@ -127,7 +127,7 @@ void analyse() :{} {
 	<ident>
 	(declFonction())*
 				{ fonction.debut(); }
-	<PRINCIPAL> { fonction.setFonctionCourante("main", eType.ENTIER); }
+	<PRINCIPAL> { fonction.setFonctionCourante("main", eType.ERREUR); }
 	bloc()
 	<FPRINCIPAL>
 	<FPROGRAMME> { yvm.queue(); }
@@ -286,8 +286,9 @@ void primaire() :{} {
 
 void valeur() :{} {
 	<entier> { expression.ajoutType(eType.ENTIER, YakaTokenManager.entierLu); }
-|	<ident> { expression.ajoutTypeFromVar(YakaTokenManager.identLu); }
-	({ expression.ajoutTypeFromFonction(YakaTokenManager.identLu); } argumentsFonction() { fonction.finAppelFonction();})? 	
+|	<ident> { boolean appel = false; }
+	({ appel = true; expression.ajoutTypeFromFonction(YakaTokenManager.identLu); } argumentsFonction() { fonction.finAppelFonction();})?
+	{ if (!appel) { expression.ajoutTypeFromVar(YakaTokenManager.identLu); } }
 |	<VRAI> { expression.ajoutType(eType.BOOLEEN, TRUE); }
 |	<FAUX> { expression.ajoutType(eType.BOOLEEN, FALSE); }
 }

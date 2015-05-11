@@ -157,9 +157,120 @@ main:
 	;aLaLigne
 	call ligsuiv
 
-	;iload -8
-	push word ptr [bp-8]
+	;reserveRetour
+	sub sp,2
 
 	;iload -2
 	push word ptr [bp-2]
 
+	;reserveRetour
+	sub sp,2
+
+	;iload -4
+	push word ptr [bp-4]
+
+	;iconst 5
+	push word ptr 5
+
+	;call min
+	call min
+
+	;call max
+	call max
+
+	;iconst 2
+	push word ptr 2
+
+	;iadd
+	pop bx
+	pop ax
+	add ax,bx
+	push ax
+
+	;istore -6
+	pop ax
+	mov word ptr [bp-6],ax
+
+	;reserveRetour
+	sub sp,2
+
+	;iconst 1
+	push word ptr 1
+
+	;reserveRetour
+	sub sp,2
+
+	;iload -2
+	push word ptr [bp-2]
+
+	;iload -4
+	push word ptr [bp-4]
+
+	;iconst 5
+	push word ptr 5
+
+	;isub
+	pop bx
+	pop ax
+	sub ax,bx
+	push ax
+
+	;call max
+	call max
+
+	;iadd
+	pop bx
+	pop ax
+	add ax,bx
+	push ax
+
+	;reserveRetour
+	sub sp,2
+
+	;iload -2
+	push word ptr [bp-2]
+
+	;iconst 2
+	push word ptr 2
+
+	;imul
+	pop bx
+	pop ax
+	imul bx
+	push ax
+
+	;iload -4
+	push word ptr [bp-4]
+
+	;call min
+	call min
+
+	;call sup
+	call sup
+
+	;istore -8
+	pop ax
+	mov word ptr [bp-8],ax
+
+	;aLaLigne
+	call ligsuiv
+
+	;iload -6
+	push word ptr [bp-6]
+
+	;ecrireEnt
+	call ecrent
+
+	;aLaLigne
+	call ligsuiv
+
+	;iload -8
+	push word ptr [bp-8]
+
+	;ecrireBool
+	call ecrbool
+
+	;queue
+	nop
+	EXITCODE
+	end

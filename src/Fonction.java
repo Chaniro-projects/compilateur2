@@ -51,7 +51,7 @@ public class Fonction implements Constante {
 		
 		}
 		else {
-			System.out.println("Erreur : problème du type de retour de la fonction (ligne : " + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : probleme du type de retour de la fonction (ligne : " + Yaka.token.beginLine + ").");
 		}
 		
 		Yaka.yvm.ireturn(2 * this.fonctionCourante.nbParametres() + 4);
@@ -91,7 +91,7 @@ public class Fonction implements Constante {
 		if (typesAttendus.size() == typesRecus.size()) {
 			while(typesRecus.size() > 0) {
 				if (typesRecus.pop() != typesAttendus.pop()) {
-					System.out.println("Erreur : problème de type lors de l'appel de la fonction (ligne : " + Yaka.token.beginLine + ").");
+					System.out.println("Erreur : probleme de type lors de l'appel de la fonction (ligne : " + Yaka.token.beginLine + ").");
 				}
 			}
 		}

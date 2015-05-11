@@ -22,7 +22,7 @@ public class Condition implements Constante {
 			Yaka.yvm.iffaux("SINON" + this.conditions.lastElement());
 		}
 		else {
-			System.out.println("Erreur : une condition attend une expression booléenne (ligne : " + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : une condition attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
 		}
 	}
 	

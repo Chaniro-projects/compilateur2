@@ -26,7 +26,7 @@ public class Affectation implements Constante {
 				Yaka.yvm.istore(((IdVar) this.identAffectation).getOffset());
 			}
 			else {
-				System.out.println("Erreur : problème de type lors de l'affectation (ligne : " + Yaka.token.beginLine + ").");
+				System.out.println("Erreur : probleme de type lors de l'affectation (ligne : " + Yaka.token.beginLine + ").");
 			}
 		}
 	}

@@ -23,7 +23,7 @@ public class Iteration implements Constante {
 			Yaka.yvm.iffaux("FAIT" + this.iterations.lastElement());
 		}
 		else {
-			System.out.println("Erreur : une itération attend une expression booléenne (ligne : " + Yaka.token.beginLine + ").");
+			System.out.println("Erreur : une iteration attend une expression booleenne (ligne : " + Yaka.token.beginLine + ").");
 		}
 	}
 	
